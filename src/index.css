@@ -16,3 +16,7 @@ code {
 .container-fluid {
   padding: 0px;
 }
+
+.pagination {
+  justify-content: center;
+}

@@ -1,6 +1,6 @@
 import React from "react";
 import _ from "lodash";
-import { DropdownButton, Dropdown } from "react-bootstrap";
+import PrivNext from "./paginationPrivNext";
 
 const Pages = props => {
   const { onPageChange, currentPage, onPriv, onNext, pagesCount } = props;
@@ -34,32 +34,19 @@ const Pages = props => {
 
       <nav aria-label="Page navigation">
         <ul className="pagination pagination-sm flex-wrap">
-          <li
-            className={currentPage === 1 ? "page-item disabled" : "page-item"}
-          >
-            <a
-              className="page-link "
-              onClick={() => onPriv()}
-              style={{ cursor: "pointer" }}
-              href={hrefLink}
-            >
-              Poprzednia
-            </a>
-          </li>
-          <li
-            className={
-              currentPage === pages.length ? "page-item disabled" : "page-item"
-            }
-          >
-            <a
-              className="page-link"
-              onClick={() => onNext()}
-              style={{ cursor: "pointer" }}
-              href={hrefLink}
-            >
-              Następna
-            </a>
-          </li>
+          <PrivNext
+            onClick={() => onPriv()}
+            currentPage={currentPage}
+            pages={pages}
+            label="Poprzednia"
+          />
+          <PrivNext
+            onClick={() => onNext()}
+            currentPage={currentPage}
+            pages={pages}
+            label="Następna"
+            maxValue
+          />
         </ul>
       </nav>
     </div>

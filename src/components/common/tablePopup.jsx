@@ -1,5 +1,6 @@
 import React from "react";
 import uuid from "uuid/v1";
+import Items from "./items";
 
 const TablePopup = ({ fields, data }) => {
   return (
@@ -17,7 +18,9 @@ const TablePopup = ({ fields, data }) => {
             item !== "imieNazwisko" && (
               <tr key={uuid()}>
                 <td key={uuid()}>{fields[item]}</td>
-                <td key={uuid()}>{data[item]}</td>
+                <td key={uuid()}>
+                  <Items data={data} item={item} />
+                </td>
               </tr>
             )
         )}

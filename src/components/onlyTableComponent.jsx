@@ -2,15 +2,16 @@ import React, { Component } from "react";
 import Popup from "./common/popupComponent";
 import TablePopup from "./common/tablePopup";
 import uuid from "uuid/v1";
+import Items from "./common/items";
 
 class OnlyTable extends Component {
   fieldsFirstSide = {
-    nr: "Nr:",
     imieNazwisko: "Imie, Nazwisko:",
+    nr: "Nr:",
     rok: "Rok:",
-    kodLokalu: "Kod lokalu:",
     nrDW: "Nr DW:",
     rokDW: "Rok DW:",
+    kodLokalu: "Kod lokalu:",
     polaczono: "Połączono:",
     adres: "Adres:",
     wartosc: "Wartość:",
@@ -44,8 +45,13 @@ class OnlyTable extends Component {
       <table key={uuid()} className="table">
         <thead key={uuid()}>
           <tr key={uuid()}>
+            <th>LP.</th>
             {Object.keys(this.fieldsFirstSide).map((item, i) => (
-              <th key={uuid()} onClick={() => this.riseSort(item)}>
+              <th
+                key={uuid()}
+                onClick={() => this.riseSort(item)}
+                style={{ cursor: "pointer" }}
+              >
                 {this.fieldsFirstSide[item]} {this.renderSortIcon(item)}
               </th>
             ))}
@@ -54,10 +60,13 @@ class OnlyTable extends Component {
           </tr>
         </thead>
         <tbody key="tableComponentBody">
-          {data.map(data => (
+          {data.map((data, i) => (
             <tr key={uuid()}>
+              <td>{i + 1}</td>
               {Object.keys(this.fieldsFirstSide).map((item, i) => (
-                <td key={uuid()}>{data[item]}</td>
+                <td key={uuid()}>
+                  <Items data={data} item={item} />
+                </td>
               ))}
 
               <td key={uuid()}>

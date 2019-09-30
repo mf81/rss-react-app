@@ -5,6 +5,7 @@ import { paginate } from "./common/paginate";
 import _ from "lodash";
 import axios from "axios";
 import { Button, Navbar, Nav, Form, FormControl } from "react-bootstrap";
+import PrivNext from "./common/paginationPrivNext";
 
 class RssTable extends Component {
   state = {
@@ -14,15 +15,15 @@ class RssTable extends Component {
     sortColumn: { sortBy: "rok", order: "desc" },
     fieldsDB: {
       nr: "Nr:",
-      rok: "Rok:",
       kodLokalu: "Kod lokalu:",
+      rok: "Rok:",
       nrDW: "Nr DW:",
       rokDW: "Rok DW:",
       polaczono: "Połączono:",
       rodzaj: "Rodzaj: ",
       imieNazwisko: "Imie, Nazwisko:",
       adres: "Adres:",
-      ADM: "ADM",
+      ADM: "ADM:",
       wartosc: "Wartość:",
       okresDochodzony: "Okres Dochodzony:",
       wniesieniePozwu: "Wniesienie Pozwu:",
@@ -44,7 +45,7 @@ class RssTable extends Component {
     }
   };
   async componentDidMount() {
-    const { data } = await axios.get("http://localhost:3000/api/rss");
+    const { data } = await axios.get("http://10.0.254.51:3000/api/rss");
     this.setState({ data });
   }
 
@@ -78,6 +79,11 @@ class RssTable extends Component {
 
   render() {
     const { length: count } = this.state.data;
+    if (count === 0) {
+      return <p>Ładuje...</p>;
+    }
+    const pagesCount = Math.ceil(count / this.state.pageSize);
+    const pages = _.range(1, pagesCount + 1);
 
     // const filtred =
     //   this.state.selectedGenres && this.state.selectedGenres._id !== "0"
@@ -94,9 +100,6 @@ class RssTable extends Component {
 
     const data = paginate(sorted, this.state.currentPage, this.state.pageSize);
 
-    if (count === 0) {
-      return <p>Ładuje...</p>;
-    }
     return (
       <React.Fragment>
         <div className="container-fluid p-0">
@@ -133,6 +136,29 @@ class RssTable extends Component {
                 onDelete={this.handleDelete}
                 onSort={this.handleSort}
               />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col">
+              <div className="text-center">
+                <nav aria-label="Page navigation mx-auto">
+                  <ul className="pagination pagination-lg ">
+                    <PrivNext
+                      onClick={() => this.handlePriv()}
+                      currentPage={this.state.currentPage}
+                      pages={pages}
+                      label="Poprzednia"
+                    />
+                    <PrivNext
+                      onClick={() => this.handelNext()}
+                      currentPage={this.state.currentPage}
+                      pages={pages}
+                      label="Następna"
+                      maxValue
+                    />
+                  </ul>
+                </nav>
+              </div>
             </div>
           </div>
         </div>
