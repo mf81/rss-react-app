@@ -18,9 +18,11 @@ const Items = ({ data, item }) => {
       sum = sum.replace(".", ",");
       return (
         <React.Fragment>
-          {data[item]} <br /> {sum}
+          {data[item]} <br /> {sum} zł
         </React.Fragment>
       );
+    } else {
+      return <React.Fragment>{text} zł</React.Fragment>;
     }
   }
   return text;

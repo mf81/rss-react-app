@@ -6,6 +6,7 @@ import _ from "lodash";
 import axios from "axios";
 import { Button, Navbar, Nav, Form, FormControl } from "react-bootstrap";
 import PrivNext from "./common/paginationPrivNext";
+import Popup from "./common/popupComponent";
 
 class RssTable extends Component {
   state = {
@@ -45,7 +46,7 @@ class RssTable extends Component {
     }
   };
   async componentDidMount() {
-    const { data } = await axios.get("http://10.0.254.51:3000/api/rss");
+    const { data } = await axios.get("http://localhost:3000/api/rss");
     this.setState({ data });
   }
 
@@ -110,11 +111,17 @@ class RssTable extends Component {
             <Form inline>
               <FormControl
                 type="text"
-                placeholder="Search"
+                placeholder="Wpisz szukaną frazę"
                 className="mr-sm-2"
               />
-              <Button variant="outline-dark">Search</Button>
+              <Button variant="outline-dark">Szukaj</Button>
             </Form>
+            <Popup
+              label="Dodaj..."
+              title="Dodaj wpis do bazy"
+              template="Dodawanie"
+              size="lg"
+            />
             <Nav className="mr-auto">
               <Pagination
                 itemsCount={count}
@@ -127,6 +134,7 @@ class RssTable extends Component {
               />
             </Nav>
           </Navbar>
+
           <div className="row">
             <div className="col">
               <OnlyTable

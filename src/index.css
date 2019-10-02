@@ -20,3 +20,8 @@ code {
 .pagination {
   justify-content: center;
 }
+
+.btn-toolbar .btn {
+  display: flex;
+  justify-content: center;
+}

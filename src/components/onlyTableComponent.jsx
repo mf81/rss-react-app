@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import Popup from "./common/popupComponent";
-import TablePopup from "./common/tablePopup";
+import DetailsTable from "./common/tableDetales";
 import uuid from "uuid/v1";
 import Items from "./common/items";
+import DeleteTable from "./common/deleteTable";
 
 class OnlyTable extends Component {
   fieldsFirstSide = {
@@ -70,17 +71,20 @@ class OnlyTable extends Component {
               ))}
 
               <td key={uuid()}>
-                <button
-                  onClick={() => onDelete(data)}
-                  className="btn btn-danger btn-sm"
-                >
-                  Kasuj
-                </button>
+                <Popup
+                  label="X"
+                  title="Kasuj wpis"
+                  template={<DeleteTable onClick={() => onDelete(data)} />}
+                  size="sm"
+                  btn="btn-danger"
+                />
               </td>
               <td key={uuid()}>
                 <Popup
-                  name={data.imieNazwisko}
-                  template={<TablePopup data={data} fields={fieldsDB} />}
+                  label="..."
+                  title={data.imieNazwisko}
+                  template={<DetailsTable data={data} fields={fieldsDB} />}
+                  closeButton="Zamknij"
                 />
               </td>
             </tr>
