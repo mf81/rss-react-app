@@ -6,19 +6,6 @@ import Items from "./common/items";
 import DeleteTable from "./common/deleteTable";
 
 class OnlyTable extends Component {
-  fieldsFirstSide = {
-    imieNazwisko: "Imie, Nazwisko:",
-    nr: "Nr:",
-    rok: "Rok:",
-    nrDW: "Nr DW:",
-    rokDW: "Rok DW:",
-    kodLokalu: "Kod lokalu:",
-    polaczono: "Połączono:",
-    adres: "Adres:",
-    wartosc: "Wartość:",
-    sygnaturaNakaz: "Sygnatura Nakaz:"
-  };
-
   riseSort = sort => {
     const sortColumn = { ...this.props.sortColumn };
 
@@ -40,20 +27,20 @@ class OnlyTable extends Component {
   };
 
   render() {
-    const { data, onDelete, fieldsDB } = this.props;
+    const { data, onDelete, onEdit, fieldsDB } = this.props;
 
     return (
       <table key={uuid()} className="table">
         <thead key={uuid()}>
           <tr key={uuid()}>
             <th>LP.</th>
-            {Object.keys(this.fieldsFirstSide).map((item, i) => (
+            {Object.keys(this.props.fieldsFirstSide).map((item, i) => (
               <th
                 key={uuid()}
                 onClick={() => this.riseSort(item)}
                 style={{ cursor: "pointer" }}
               >
-                {this.fieldsFirstSide[item]} {this.renderSortIcon(item)}
+                {this.props.fieldsFirstSide[item]} {this.renderSortIcon(item)}
               </th>
             ))}
             <th />
@@ -64,7 +51,7 @@ class OnlyTable extends Component {
           {data.map((data, i) => (
             <tr key={uuid()}>
               <td>{i + 1}</td>
-              {Object.keys(this.fieldsFirstSide).map((item, i) => (
+              {Object.keys(this.props.fieldsFirstSide).map(item => (
                 <td key={uuid()}>
                   <Items data={data} item={item} />
                 </td>
@@ -77,6 +64,7 @@ class OnlyTable extends Component {
                   template={<DeleteTable onClick={() => onDelete(data)} />}
                   size="sm"
                   btn="btn-danger"
+                  extraProps
                 />
               </td>
               <td key={uuid()}>
@@ -84,6 +72,7 @@ class OnlyTable extends Component {
                   label="..."
                   title={data.imieNazwisko}
                   template={<DetailsTable data={data} fields={fieldsDB} />}
+                  variant="primary"
                   closeButton="Zamknij"
                 />
               </td>

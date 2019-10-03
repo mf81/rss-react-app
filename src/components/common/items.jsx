@@ -1,4 +1,6 @@
 import React from "react";
+import Popup from "./popupComponent";
+import EditTable from "./editTable";
 
 const Items = ({ data, item }) => {
   let text = data[item];
@@ -24,6 +26,21 @@ const Items = ({ data, item }) => {
     } else {
       return <React.Fragment>{text} zł</React.Fragment>;
     }
+  }
+
+  if (item === "imieNazwisko") {
+    return (
+      <React.Fragment>
+        <Popup
+          label={data[item] ? data[item] : "brak wartości"}
+          title={data[item]}
+          template={<EditTable data={data} />}
+          size="lg"
+          variant="outline-primary"
+          closeButton="Zamknij bez zapisania"
+        />
+      </React.Fragment>
+    );
   }
   return text;
 };

@@ -1,12 +1,13 @@
 import React, { Component } from "react";
-import Pagination from "./common/pagination";
-import OnlyTable from "./onlyTableComponent";
-import { paginate } from "./common/paginate";
 import _ from "lodash";
-import axios from "axios";
-import { Button, Navbar, Nav, Form, FormControl } from "react-bootstrap";
+import Pagination from "./common/pagination";
 import PrivNext from "./common/paginationPrivNext";
+import { paginate } from "./common/paginate";
+import OnlyTable from "./onlyTableComponent";
 import Popup from "./common/popupComponent";
+import { Button, Navbar, Nav, Form, FormControl } from "react-bootstrap";
+import axios from "axios";
+import AddTooDb from "./common/addTooDbTable";
 
 class RssTable extends Component {
   state = {
@@ -43,10 +44,22 @@ class RssTable extends Component {
       przekazanoDoDP: "Przekazano do DP:",
       radcaPrawny: "Radca Prawny: ",
       rozliczoneZastepstwa: "Rozliczone Zastępstwa:"
+    },
+    fieldsFirstSide: {
+      imieNazwisko: "Imie, Nazwisko:",
+      nr: "Nr:",
+      rok: "Rok:",
+      nrDW: "Nr DW:",
+      rokDW: "Rok DW:",
+      kodLokalu: "Kod lokalu:",
+      polaczono: "Połączono:",
+      adres: "Adres:",
+      wartosc: "Wartość:",
+      sygnaturaNakaz: "Sygnatura Nakaz:"
     }
   };
   async componentDidMount() {
-    const { data } = await axios.get("http://localhost:3000/api/rss");
+    const { data } = await axios.get("http://10.0.254.51:3000/api/rss");
     this.setState({ data });
   }
 
@@ -76,6 +89,11 @@ class RssTable extends Component {
 
   handleSort = sortColumn => {
     this.setState({ sortColumn });
+  };
+
+  handleEdit = data => {
+    console.log("OK edit");
+    console.log("Data:", data);
   };
 
   render() {
@@ -119,8 +137,10 @@ class RssTable extends Component {
             <Popup
               label="Dodaj..."
               title="Dodaj wpis do bazy"
-              template="Dodawanie"
+              template={<AddTooDb fieldsDB={this.state.fieldsDB} />}
               size="lg"
+              variant="primary"
+              extraProps
             />
             <Nav className="mr-auto">
               <Pagination
@@ -134,13 +154,14 @@ class RssTable extends Component {
               />
             </Nav>
           </Navbar>
-
           <div className="row">
             <div className="col">
               <OnlyTable
                 fieldsDB={this.state.fieldsDB}
+                fieldsFirstSide={this.state.fieldsFirstSide}
                 data={data}
                 sortColumn={this.state.sortColumn}
+                onEdit={this.handleEdit}
                 onDelete={this.handleDelete}
                 onSort={this.handleSort}
               />

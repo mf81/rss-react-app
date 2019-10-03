@@ -1,14 +1,28 @@
 import React, { useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 
-const Popup = ({ label, title, template, closeButton, btn, size }) => {
+const Popup = ({
+  label,
+  title,
+  template,
+  closeButton,
+  btn,
+  size,
+  extraProps,
+  variant
+}) => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   return (
     <React.Fragment>
-      <Button variant={"primary btn-sm " + btn} onClick={handleShow}>
+      <Button
+        variant={
+          variant ? variant + " btn-sm " + btn : " primary btn-sm " + btn
+        }
+        onClick={handleShow}
+      >
         {label}
       </Button>
       <Modal show={show} onHide={handleClose} size={size}>
@@ -16,7 +30,9 @@ const Popup = ({ label, title, template, closeButton, btn, size }) => {
           <Modal.Title>{title}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {AddExtraProps(template, { handleClose: handleClose })}
+          {extraProps
+            ? AddExtraProps(template, { handleClose: handleClose })
+            : template}
         </Modal.Body>
         {closeButton && (
           <Modal.Footer>
