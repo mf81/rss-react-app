@@ -17,9 +17,10 @@ const TablePopup = ({ fields, data }) => {
             data[item] &&
             item !== "imieNazwisko" && (
               <tr key={uuid()}>
-                <td key={uuid()}>{fields[item]}</td>
+                <td key={uuid()}>{fields[item].label}</td>
                 <td key={uuid()}>
                   <Items data={data} item={item} />
+                  {fields[item].label}
                 </td>
               </tr>
             )

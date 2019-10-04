@@ -15,51 +15,54 @@ class RssTable extends Component {
     pageSize: 100,
     currentPage: 1,
     sortColumn: { sortBy: "rok", order: "desc" },
-    fieldsDB: {
-      nr: "Nr:",
-      kodLokalu: "Kod lokalu:",
-      rok: "Rok:",
-      nrDW: "Nr DW:",
-      rokDW: "Rok DW:",
-      polaczono: "Połączono:",
-      rodzaj: "Rodzaj: ",
-      imieNazwisko: "Imie, Nazwisko:",
-      adres: "Adres:",
-      ADM: "ADM:",
-      wartosc: "Wartość:",
-      okresDochodzony: "Okres Dochodzony:",
-      wniesieniePozwu: "Wniesienie Pozwu:",
-      sygnaturaNakaz: "Sygnatura Nakaz:",
-      orzeczenieNakaz: "Orzeczenie Nakaz:",
-      sygnaturaSprzeciw: "SygnaturaSprzeciw:",
-      orzeczenieSprzeciw: "Orzeczenie Sprzeciw:",
-      sygnaturaApelacja: "Sygnatura Apelacja:",
-      orzeczenieApelacja: "Orzeczenie Apelacja",
-      wystapienieOklauzul: "Wystapienie Oklauzule:",
-      wniosekMajatku: "Wniosek Majatku:",
-      sygnAktWyjawienia: "Sygnatura Akt Wyjawienia:",
-      orzeczenieWyjawienia: "Orzeczenie Wyjawienia:",
-      etapPostEgz: "Etap Postępowania Egzekującego:",
-      uwagi: "Uwagi:",
-      przekazanoDoDP: "Przekazano do DP:",
-      radcaPrawny: "Radca Prawny: ",
-      rozliczoneZastepstwa: "Rozliczone Zastępstwa:"
-    },
-    fieldsFirstSide: {
-      imieNazwisko: "Imie, Nazwisko:",
-      nr: "Nr:",
-      rok: "Rok:",
-      nrDW: "Nr DW:",
-      rokDW: "Rok DW:",
-      kodLokalu: "Kod lokalu:",
-      polaczono: "Połączono:",
-      adres: "Adres:",
-      wartosc: "Wartość:",
-      sygnaturaNakaz: "Sygnatura Nakaz:"
+    fields: {
+      imieNazwisko: { label: "Imie, Nazwisko:", firstSite: true },
+      nr: { label: "Nr:", firstSite: true },
+      rok: { label: "Rok:", firstSite: true },
+      rokDW: { label: "Rok DW:", firstSite: true },
+      nrDW: { label: "Nr DW:", firstSite: true },
+      kodLokalu: { label: "Kod lokalu:", firstSite: true },
+      polaczono: { label: "Połączono:", firstSite: true },
+      adres: { label: "Adres:", firstSite: true },
+      wartosc: { label: "Wartość:", firstSite: true },
+      sygnaturaNakaz: { label: "Sygnatura Nakaz:", firstSite: true },
+      rodzaj: { label: "Rodzaj: ", firstSite: false },
+      ADM: { label: "ADM:", firstSite: false },
+      okresDochodzony: { label: "Okres Dochodzony:", firstSite: false },
+      wniesieniePozwu: { label: "Wniesienie Pozwu:", firstSite: false },
+      orzeczenieNakaz: { label: "Orzeczenie Nakaz:", firstSite: false },
+      sygnaturaSprzeciw: { label: "SygnaturaSprzeciw:", firstSite: false },
+      orzeczenieSprzeciw: { label: "Orzeczenie Sprzeciw:", firstSite: false },
+      sygnaturaApelacja: { label: "Sygnatura Apelacja:", firstSite: false },
+      orzeczenieApelacja: { label: "Orzeczenie Apelacja", firstSite: false },
+      wystapienieOklauzul: {
+        label: "Wystapienie Oklauzule:",
+        firstSite: false
+      },
+      wniosekMajatku: { label: "Wniosek Majatku:", firstSite: false },
+      sygnAktWyjawienia: {
+        label: "Sygnatura Akt Wyjawienia:",
+        firstSite: false
+      },
+      orzeczenieWyjawienia: {
+        label: "Orzeczenie Wyjawienia:",
+        firstSite: false
+      },
+      etapPostEgz: {
+        label: "Etap Postępowania Egzekującego:",
+        firstSite: false
+      },
+      uwagi: { label: "Uwagi:", firstSite: false },
+      przekazanoDoDP: { label: "Przekazano do DP:", firstSite: false },
+      radcaPrawny: { label: "Radca Prawny: ", firstSite: false },
+      rozliczoneZastepstwa: {
+        label: "Rozliczone Zastępstwa:",
+        firstSite: false
+      }
     }
   };
   async componentDidMount() {
-    const { data } = await axios.get("http://10.0.254.51:3000/api/rss");
+    const { data } = await axios.get("http://localhost:3000/api/rss");
     this.setState({ data });
   }
 
@@ -137,7 +140,7 @@ class RssTable extends Component {
             <Popup
               label="Dodaj..."
               title="Dodaj wpis do bazy"
-              template={<AddTooDb fieldsDB={this.state.fieldsDB} />}
+              template={<AddTooDb fields={this.state.fields} />}
               size="lg"
               variant="primary"
               extraProps
@@ -157,8 +160,7 @@ class RssTable extends Component {
           <div className="row">
             <div className="col">
               <OnlyTable
-                fieldsDB={this.state.fieldsDB}
-                fieldsFirstSide={this.state.fieldsFirstSide}
+                fields={this.state.fields}
                 data={data}
                 sortColumn={this.state.sortColumn}
                 onEdit={this.handleEdit}

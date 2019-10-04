@@ -1,18 +1,14 @@
 import React from "react";
 
-const EditTable = ({ data }) => {
-  return (
-    <React.Fragment>
-      {Object.keys(data).map(item => (
-        <p>
-          {item !== "_id" && item !== "__v" && (
-            <p>
-              {item}: {data[item]}
-            </p>
-          )}
+const EditTable = ({ data, fields }) => {
+  return Object.keys(fields).map(
+    (item, i) =>
+      fields[item] !== "_id" &&
+      fields[item] !== "__v" && (
+        <p key={i}>
+          {fields[item].label} {data[item]}
         </p>
-      ))}
-    </React.Fragment>
+      )
   );
 };
 

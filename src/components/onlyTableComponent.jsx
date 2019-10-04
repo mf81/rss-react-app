@@ -27,22 +27,26 @@ class OnlyTable extends Component {
   };
 
   render() {
-    const { data, onDelete, onEdit, fieldsDB } = this.props;
-
+    const { data, onDelete, onEdit, fields } = this.props;
     return (
       <table key={uuid()} className="table">
         <thead key={uuid()}>
           <tr key={uuid()}>
             <th>LP.</th>
-            {Object.keys(this.props.fieldsFirstSide).map((item, i) => (
-              <th
-                key={uuid()}
-                onClick={() => this.riseSort(item)}
-                style={{ cursor: "pointer" }}
-              >
-                {this.props.fieldsFirstSide[item]} {this.renderSortIcon(item)}
-              </th>
-            ))}
+            {Object.keys(fields).map(
+              (item, i) =>
+                fields[item].firstSite && (
+                  <th
+                    key={uuid()}
+                    onClick={() => this.riseSort(item)}
+                    style={{ cursor: "pointer" }}
+                  >
+                    {fields[item].firstSite && fields[item].label}{" "}
+                    {this.renderSortIcon(item)}
+                  </th>
+                )
+            )}
+
             <th />
             <th />
           </tr>
@@ -51,11 +55,14 @@ class OnlyTable extends Component {
           {data.map((data, i) => (
             <tr key={uuid()}>
               <td>{i + 1}</td>
-              {Object.keys(this.props.fieldsFirstSide).map(item => (
-                <td key={uuid()}>
-                  <Items data={data} item={item} />
-                </td>
-              ))}
+              {Object.keys(fields).map(
+                item =>
+                  fields[item].firstSite && (
+                    <td key={uuid()}>
+                      <Items data={data} item={item} fields={fields} />
+                    </td>
+                  )
+              )}
 
               <td key={uuid()}>
                 <Popup
@@ -71,7 +78,7 @@ class OnlyTable extends Component {
                 <Popup
                   label="..."
                   title={data.imieNazwisko}
-                  template={<DetailsTable data={data} fields={fieldsDB} />}
+                  template={<DetailsTable data={data} fields={fields} />}
                   variant="primary"
                   closeButton="Zamknij"
                 />

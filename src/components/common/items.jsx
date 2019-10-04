@@ -2,7 +2,7 @@ import React from "react";
 import Popup from "./popupComponent";
 import EditTable from "./editTable";
 
-const Items = ({ data, item }) => {
+const Items = ({ data, item, fields }) => {
   let text = data[item];
 
   if (item === "wartosc") {
@@ -33,8 +33,8 @@ const Items = ({ data, item }) => {
       <React.Fragment>
         <Popup
           label={data[item] ? data[item] : "brak wartości"}
-          title={data[item]}
-          template={<EditTable data={data} />}
+          title="Edytuj wpis"
+          template={<EditTable data={data} fields={fields} />}
           size="lg"
           variant="outline-primary"
           closeButton="Zamknij bez zapisania"
