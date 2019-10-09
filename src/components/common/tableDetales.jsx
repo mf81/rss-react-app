@@ -20,7 +20,6 @@ const TablePopup = ({ fields, data }) => {
                 <td key={uuid()}>{fields[item].label}</td>
                 <td key={uuid()}>
                   <Items data={data} item={item} />
-                  {fields[item].label}
                 </td>
               </tr>
             )
