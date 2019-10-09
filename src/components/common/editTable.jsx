@@ -4,9 +4,7 @@ import Joi from "joi-browser";
 import uuid from "uuid/v1";
 
 class EditTable extends Form {
-  state = { data: {} };
-
-  componentWillMount() {
+  componentDidMount() {
     this.setState({ data: this.props.data });
   }
 
@@ -23,13 +21,12 @@ class EditTable extends Form {
 
   render() {
     const { data, fields } = this.props;
-
     return (
       <React.Fragment>
         <form onSubmit={this.handleSubmit}>
           {Object.keys(fields).map((item, i) => {
             return (
-              <div key={uuid()}>
+              <div>
                 {item !== "_id" &&
                   item !== "__v" &&
                   this.renderInput(item, fields[item].label, "text", true)}

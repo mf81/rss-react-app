@@ -37,15 +37,19 @@ class Form extends Component {
   };
 
   handleChange = ({ currentTarget }) => {
+    console.log("CurrentTarget", currentTarget);
     const { name, value } = currentTarget;
     const errors = { ...this.state.errors };
+    // console.log("Name", name);
+    // console.log("Value", value);
 
-    const errorMessage = this.validateProperty(currentTarget);
-    if (errorMessage) errors[name] = errorMessage;
-    else delete errors[name];
+    // const errorMessage = this.validateProperty(currentTarget);
+    // if (errorMessage) errors[name] = errorMessage;
+    // else delete errors[name];
 
     const data = { ...this.state.data };
     data[name] = value;
+    // console.log("Data[name]", data[name]);
     this.setState({ data, errors });
   };
 
@@ -58,12 +62,14 @@ class Form extends Component {
   }
 
   renderInput(name, label, type = "text", autoFocus) {
+    console.log("Z Form", this.state);
     return (
       <Input
         name={name}
         label={label}
         errors={this.state.errors}
         type={type}
+        value={this.state.data[name]}
         onChange={this.handleChange}
         autoFocus={autoFocus}
       />
