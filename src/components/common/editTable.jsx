@@ -1,36 +1,24 @@
 import React from "react";
 import Form from "./form";
-import Joi from "joi-browser";
-import uuid from "uuid/v1";
+//import Joi from "joi-browser";
 
 class EditTable extends Form {
-  componentDidMount() {
+  state = { data: {}, errors: {} };
+
+  componentWillMount() {
     this.setState({ data: this.props.data });
   }
 
-  schema = {
-    imieNazwisko: Joi.string()
-      .required()
-      .label("Imię Nazwisko")
-      .error(() => {
-        return {
-          message: "Pole użytkownika nie może być puste..."
-        };
-      })
-  };
-
   render() {
-    const { data, fields } = this.props;
+    const { fields } = this.props;
     return (
       <React.Fragment>
         <form onSubmit={this.handleSubmit}>
           {Object.keys(fields).map((item, i) => {
             return (
-              <div>
-                {item !== "_id" &&
-                  item !== "__v" &&
-                  this.renderInput(item, fields[item].label, "text", true)}
-              </div>
+              item !== "_id" &&
+              item !== "__v" &&
+              this.renderInput(item, fields[item].label, "text", true)
             );
           })}
           ;{this.renderButton("Zapisz")}
@@ -41,5 +29,3 @@ class EditTable extends Form {
 }
 
 export default EditTable;
-
-// this.renderInput(item, fields[item].label, "text", true)

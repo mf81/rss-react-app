@@ -1,14 +1,21 @@
 import React from "react";
-import uuid from "uuid/v1";
 
 const Input = ({ name, label, errors, ...rest }) => {
   return (
-    <div className="form-group">
-      <label htmlFor={name}>{label}</label>
-      <input id={name} name={name} {...rest} className="form-control" />
-      {/* {errors[name] && (
+    <div className="form-group" key={"div" + name}>
+      <label htmlFor={name} key={"label" + name}>
+        {label}
+      </label>
+      <input
+        id={name}
+        name={name}
+        key={name}
+        {...rest}
+        className="form-control"
+      />
+      {errors[name] && (
         <div className="alert alert-danger m-2">{errors[name]}</div>
-      )} */}
+      )}
     </div>
   );
 };
