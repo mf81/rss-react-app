@@ -21,7 +21,7 @@ class EditTable extends Form {
               this.renderInput(item, fields[item].label, "text", true)
             );
           })}
-          ;{this.renderButton("Zapisz")}
+          {this.renderButton("Zapisz")}
         </form>
       </React.Fragment>
     );
