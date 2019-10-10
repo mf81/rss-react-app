@@ -1,7 +1,6 @@
 import React from "react";
 import Popup from "./popupComponent";
 import EditTable from "./editTable";
-import uuid from "uuid/v1";
 
 const Items = ({ data, item, fields }) => {
   let text = data[item];

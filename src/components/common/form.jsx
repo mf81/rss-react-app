@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Joi from "joi-browser";
-import schema from "./joiSchema";
+import schema from "./joiSchema.js";
 import Input from "./input";
 
 class Form extends Component {
@@ -15,6 +15,7 @@ class Form extends Component {
     result.error.details.map(m => {
       return (errors[m.path[0]] = m.message);
     });
+    console.log(errors);
     return errors;
   };
 

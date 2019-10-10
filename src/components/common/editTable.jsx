@@ -3,11 +3,13 @@ import Form from "./form";
 //import Joi from "joi-browser";
 
 class EditTable extends Form {
-  state = { data: {}, errors: {} };
-
   componentWillMount() {
     this.setState({ data: this.props.data });
   }
+
+  doSubmit = () => {
+    console.log("its submitted");
+  };
 
   render() {
     const { fields } = this.props;

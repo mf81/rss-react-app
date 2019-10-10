@@ -1,14 +1,13 @@
 import React from "react";
-import uuid from "uuid/v1";
 import Items from "./items";
 
 const TablePopup = ({ fields, data }) => {
   return (
-    <table key={uuid()} className="table table-striped">
+    <table className="table table-striped">
       <thead>
-        <tr key={uuid()}>
-          <th key={uuid()}>Pole:</th>
-          <th key={uuid()}>Wartość:</th>
+        <tr>
+          <th>Pole:</th>
+          <th>Wartość:</th>
         </tr>
       </thead>
       <tbody>
@@ -16,9 +15,9 @@ const TablePopup = ({ fields, data }) => {
           (item, i) =>
             data[item] &&
             item !== "imieNazwisko" && (
-              <tr key={uuid()}>
-                <td key={uuid()}>{fields[item].label}</td>
-                <td key={uuid()}>
+              <tr key={"tr" + item}>
+                <td key={"td" + item}>{fields[item].label}</td>
+                <td key={"item" + item}>
                   <Items data={data} item={item} />
                 </td>
               </tr>

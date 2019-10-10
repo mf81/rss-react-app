@@ -1,7 +1,12 @@
-import React from "react";
 import Joi from "joi-browser";
 
 const JoiSchema = {
+  _id: Joi.string()
+    .required()
+    .max(60),
+  __v: Joi.number()
+    .required()
+    .max(60),
   nr: Joi.string()
     .required()
     .max(30)

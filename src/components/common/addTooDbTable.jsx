@@ -1,6 +1,5 @@
 import React from "react";
-import { Form, Row, Col, Button } from "react-bootstrap";
-import uuid from "uuid/v1";
+import { Button } from "react-bootstrap";
 import FormComponent from "./form";
 
 class AddTooDb extends FormComponent {
