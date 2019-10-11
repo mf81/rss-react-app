@@ -15,7 +15,6 @@ class Form extends Component {
     result.error.details.map(m => {
       return (errors[m.path[0]] = m.message);
     });
-    console.log(errors);
     return errors;
   };
 

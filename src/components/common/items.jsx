@@ -1,36 +1,12 @@
 import React from "react";
 import Popup from "./popupComponent";
 import EditTable from "./editTable";
+import AmountSum from "./amountSumComponent";
 
 const Items = ({ data, item, fields }) => {
-  let text = data[item];
-
-  if (item === "wartosc") {
-    let sum;
-
-    const regexConstructor = new RegExp("\\(\\d+,\\d+\\+\\d+,\\d+\\)");
-    if (regexConstructor.test(text)) {
-      text = text.replace("(", "");
-      text = text.replace(")", "");
-      text = text.replace(/,/g, ".");
-      text = text.replace(" ", "");
-      text = text.split("+");
-      sum = parseFloat(text[0], 10) + parseFloat(text[1], 10);
-      sum = sum.toFixed(2);
-      sum = sum.replace(".", ",");
+  switch (item) {
+    case "imieNazwisko":
       return (
-        <React.Fragment>
-          {data[item]} <br /> {sum} zł
-        </React.Fragment>
-      );
-    } else {
-      return <React.Fragment>{text} zł</React.Fragment>;
-    }
-  }
-
-  if (item === "imieNazwisko") {
-    return (
-      <React.Fragment>
         <Popup
           label={data[item] ? data[item] : "brak wartości"}
           title="Edytuj wpis"
@@ -39,10 +15,12 @@ const Items = ({ data, item, fields }) => {
           variant="outline-primary"
           closeButton="Zamknij bez zapisania"
         />
-      </React.Fragment>
-    );
+      );
+    case "wartosc":
+      return <AmountSum data={data} item={item} />;
+    default:
+      return data[item];
   }
-  return text;
 };
 
 export default Items;
