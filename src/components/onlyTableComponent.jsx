@@ -62,7 +62,6 @@ class OnlyTable extends Component {
                     </td>
                   )
               )}
-
               <td key={uuid()}>
                 <Popup
                   label="X"

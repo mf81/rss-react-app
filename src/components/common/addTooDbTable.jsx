@@ -3,8 +3,12 @@ import { Button } from "react-bootstrap";
 import FormComponent from "./form";
 
 class AddTooDb extends FormComponent {
+  // componentWillMount() {
+  //   this.setState({ data: this.props.data });
+  // }
+
   doSubmit = () => {
-    console.log("its submitted");
+    console.log("its submitted from add");
   };
 
   render() {
