@@ -2,11 +2,11 @@ import Joi from "joi-browser";
 
 const JoiSchema = {
   _id: Joi.string()
-    .required()
-    .max(60),
+    .optional()
+    .allow(""),
   __v: Joi.number()
-    .required()
-    .max(60),
+    .optional()
+    .allow(""),
   nr: Joi.string()
     .required()
     .max(30)

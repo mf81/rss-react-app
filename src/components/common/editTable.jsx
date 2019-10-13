@@ -9,6 +9,8 @@ class EditTable extends Form {
 
   doSubmit = () => {
     console.log("its submitted");
+
+    console.log("its submitted from edit", this.state.data);
   };
 
   render() {

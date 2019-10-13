@@ -15,6 +15,7 @@ class Form extends Component {
     result.error.details.map(m => {
       return (errors[m.path[0]] = m.message);
     });
+    console.log(errors);
     return errors;
   };
 
@@ -66,7 +67,7 @@ class Form extends Component {
         label={label}
         errors={this.state.errors}
         type={type}
-        value={this.state.data[name]}
+        value={this.state.data[name] || ""}
         onChange={this.handleChange}
         key={name}
         autoFocus={autoFocus}

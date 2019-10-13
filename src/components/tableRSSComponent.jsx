@@ -54,11 +54,11 @@ class RssTable extends Component {
       },
       uwagi: { label: "Uwagi:", firstSite: false },
       przekazanoDoDP: { label: "Przekazano do DP:", firstSite: false },
-      radcaPrawny: { label: "Radca Prawny: ", firstSite: false },
       rozliczoneZastepstwa: {
         label: "Rozliczone Zastępstwa:",
         firstSite: false
-      }
+      },
+      radcaPrawny: { label: "Radca Prawny: ", firstSite: false }
     }
   };
   async componentDidMount() {
