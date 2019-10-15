@@ -1,16 +1,10 @@
 import React from "react";
 import { Button } from "react-bootstrap";
 import FormComponent from "./form";
+import axios from "axios";
 
 class AddTooDb extends FormComponent {
-  doSubmit = () => {
-    // const res = { ...this.state.data };
-    // delete res._id;
-    // delete res.__v;
-    // delete this.state._id;
-    // delete this.state.__v;
-    console.log("its submitted from add", this.state.data);
-  };
+  doSubmit = () => this.props.doSubmit(this.state.data);
 
   render() {
     const { fields, handleClose } = this.props;

@@ -99,6 +99,19 @@ class RssTable extends Component {
     console.log("Data:", data);
   };
 
+  handleAdd = async data => {
+    const originalState = this.state.data;
+
+    const newState = [data, ...this.state.data];
+    this.setState({ data: newState });
+
+    try {
+      await axios.post("http://localhost:3000/api/rss", data);
+    } catch {
+      this.setState({ data: originalState });
+    }
+  };
+
   render() {
     const { length: count } = this.state.data;
     if (count === 0) {
@@ -140,7 +153,13 @@ class RssTable extends Component {
             <Popup
               label="Dodaj..."
               title="Dodaj wpis do bazy"
-              template={<AddTooDb fields={this.state.fields} />}
+              template={
+                <AddTooDb
+                  fields={this.state.fields}
+                  doSubmit={this.handleAdd}
+                  data={this.state.data}
+                />
+              }
               size="lg"
               variant="primary"
               extraProps

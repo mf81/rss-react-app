@@ -19,7 +19,7 @@ const Items = ({ data, item, fields }) => {
     case "wartosc":
       return <AmountSum data={data} item={item} />;
     default:
-      return data[item];
+      return <React.Fragment>{data[item]}</React.Fragment>;
   }
 };
 
