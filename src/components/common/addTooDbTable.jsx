@@ -1,13 +1,12 @@
 import React from "react";
 import { Button } from "react-bootstrap";
 import FormComponent from "./form";
-import axios from "axios";
 
 class AddTooDb extends FormComponent {
   doSubmit = () => this.props.doSubmit(this.state.data);
 
   render() {
-    const { fields, handleClose } = this.props;
+    const { fields, handleClose, onClick } = this.props;
     return (
       <React.Fragment>
         <form onSubmit={this.handleSubmit}>
@@ -15,10 +14,14 @@ class AddTooDb extends FormComponent {
             this.renderInput(item, fields[item].label, "text", true)
           )}
           {this.renderButton("Zapisz")}
+
           <Button variant="secondary m-2" onClick={handleClose}>
             Anuluj
           </Button>
         </form>
+        <Button variant="secondary m-2" onClick={onClick}>
+          Zapisz poza
+        </Button>
       </React.Fragment>
     );
   }

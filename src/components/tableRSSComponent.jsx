@@ -94,11 +94,6 @@ class RssTable extends Component {
     this.setState({ sortColumn });
   };
 
-  handleEdit = data => {
-    console.log("OK edit");
-    console.log("Data:", data);
-  };
-
   handleAdd = async data => {
     const originalState = this.state.data;
 
@@ -107,6 +102,42 @@ class RssTable extends Component {
 
     try {
       await axios.post("http://localhost:3000/api/rss", data);
+    } catch {
+      this.setState({ data: originalState });
+    }
+  };
+
+  handleEdit = data => {
+    console.log("OK edit");
+    console.log("Data:", data);
+
+    //const originalState = this.state.data;
+
+    const upData = [...this.state.data];
+    const index = upData.indexOf(data);
+    console.log("index", index);
+    upData[index] = { ...data };
+    console.log("upData", upData);
+    this.setState({ upData });
+
+    // const res = this.state.data.filter(d => d._id !== data._id);
+    // this.setState({ data: res });
+
+    // try {
+    //   await axios.delete("http://localhost:3000/api/rss/" + data._id);
+    // } catch {
+    //   this.setState({ data: originalState });
+    // }
+  };
+
+  handleDelete = async data => {
+    const originalState = this.state.data;
+
+    const res = this.state.data.filter(d => d._id !== data._id);
+    this.setState({ data: res });
+
+    try {
+      await axios.delete("http://localhost:3000/api/rss/" + data._id);
     } catch {
       this.setState({ data: originalState });
     }
@@ -157,7 +188,9 @@ class RssTable extends Component {
                 <AddTooDb
                   fields={this.state.fields}
                   doSubmit={this.handleAdd}
+                  onClick={() => this.handleAdd()}
                   data={this.state.data}
+                  extraProps
                 />
               }
               size="lg"

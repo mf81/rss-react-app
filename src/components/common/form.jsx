@@ -15,7 +15,6 @@ class Form extends Component {
     result.error.details.map(m => {
       return (errors[m.path[0]] = m.message);
     });
-    console.log(errors);
     return errors;
   };
 
@@ -31,10 +30,10 @@ class Form extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-
     const errors = this.validate();
     this.setState({ errors: errors || {} });
     if (errors) return;
+    this.props.handleClose();
     this.doSubmit();
   };
 

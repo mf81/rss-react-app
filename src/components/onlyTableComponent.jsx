@@ -27,7 +27,7 @@ class OnlyTable extends Component {
   };
 
   render() {
-    const { data, onDelete, fields } = this.props;
+    const { data, onDelete, fields, onEdit } = this.props;
     return (
       <table key={uuid()} className="table table-striped">
         <thead key={uuid()}>
@@ -58,7 +58,12 @@ class OnlyTable extends Component {
                 item =>
                   fields[item].firstSite && (
                     <td key={uuid()}>
-                      <Items data={data} item={item} fields={fields} />
+                      <Items
+                        data={data}
+                        item={item}
+                        fields={fields}
+                        onEdit={onEdit}
+                      />
                     </td>
                   )
               )}
