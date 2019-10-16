@@ -8,6 +8,8 @@ import Popup from "./common/popupComponent";
 import { Button, Navbar, Nav, Form, FormControl } from "react-bootstrap";
 import axios from "axios";
 import AddTooDb from "./common/addTooDbTable";
+import Search from "./common/searchComponent";
+import SearchResults from "react-filter-search";
 
 class RssTable extends Component {
   ip = {
@@ -16,6 +18,7 @@ class RssTable extends Component {
   };
   state = {
     data: [],
+    filter: "",
     pageSize: 100,
     currentPage: 1,
     sortColumn: { sortBy: "rok", order: "desc" },
@@ -75,10 +78,7 @@ class RssTable extends Component {
     this.setState({ data });
   };
 
-  handlePageChange = page => {
-    this.setState({ currentPage: page });
-    console.log(page);
-  };
+  handlePageChange = page => this.setState({ currentPage: page });
 
   handlePriv = () => {
     const statePriv = this.state.currentPage - 1;
@@ -90,13 +90,9 @@ class RssTable extends Component {
     this.setState({ currentPage: stateNext });
   };
 
-  handlePageSize = size => {
-    this.setState({ currentPage: 1, pageSize: size });
-  };
+  handlePageSize = size => this.setState({ currentPage: 1, pageSize: size });
 
-  handleSort = sortColumn => {
-    this.setState({ sortColumn });
-  };
+  handleSort = sortColumn => this.setState({ sortColumn });
 
   handleAdd = async data => {
     const originalState = this.state.data;
@@ -139,8 +135,25 @@ class RssTable extends Component {
     }
   };
 
+  filterSearch = (filter, data) => {
+    const lowercasedFilter = filter.toLowerCase();
+
+    return data.filter(item => {
+      return Object.keys(item).some(
+        key =>
+          typeof item[key] === "string" &&
+          item[key].toLowerCase().includes(lowercasedFilter)
+      );
+    });
+  };
+
+  handleChange = event => this.setState({ filter: event.target.value });
+
   render() {
-    const { length: count } = this.state.data;
+    const filteredData = this.filterSearch(this.state.filter, this.state.data);
+
+    // const { length: count } = this.state.data;
+    const { length: count } = filteredData;
     if (count === 0) {
       return <p>Ładuje...</p>;
     }
@@ -155,12 +168,20 @@ class RssTable extends Component {
     //     : this.state.data;
 
     const sorted = _.orderBy(
-      this.state.data,
+      filteredData,
       [this.state.sortColumn.sortBy],
       [this.state.sortColumn.order]
     );
+    // const sorted = _.orderBy(
+    //   this.state.data,
+    //   [this.state.sortColumn.sortBy],
+    //   [this.state.sortColumn.order]
+    // );
 
     const data = paginate(sorted, this.state.currentPage, this.state.pageSize);
+
+    console.log("data:", data);
+    console.log("Pages:", this.state.currentPage, this.state.pageSize);
 
     return (
       <React.Fragment>
@@ -169,14 +190,8 @@ class RssTable extends Component {
             <Navbar.Brand href="/">Rejestr Spraw Sądowych</Navbar.Brand>
           </Navbar>
           <Navbar bg="light" variant="dark" sticky="top">
-            <Form inline>
-              <FormControl
-                type="text"
-                placeholder="Wpisz szukaną frazę"
-                className="mr-sm-2"
-              />
-              <Button variant="outline-dark">Szukaj</Button>
-            </Form>
+            <Search value={this.state.filter} onChange={this.handleChange} />
+
             <Popup
               label="Dodaj..."
               title="Dodaj wpis do bazy"
@@ -207,6 +222,23 @@ class RssTable extends Component {
           </Navbar>
           <div className="row">
             <div className="col">
+              {/* <SearchResults
+                value={this.state.valueSearch}
+                data={data}
+                renderResults={results => {
+                  return (
+                    <OnlyTable
+                      fields={this.state.fields}
+                      data={results}
+                      sortColumn={this.state.sortColumn}
+                      onEdit={this.handleEdit}
+                      onDelete={this.handleDelete}
+                      onSort={this.handleSort}
+                    />
+                  );
+                }}
+              /> */}
+
               <OnlyTable
                 fields={this.state.fields}
                 data={data}
@@ -247,3 +279,13 @@ class RssTable extends Component {
 }
 
 export default RssTable;
+
+// <Form inline>
+// <FormControl
+//   type="text"
+//   placeholder="Wpisz szukaną frazę"
+//   className="mr-sm-2"
+//   value={this.state.valueSearch || ""}
+//   onChange={this.handleSearch}
+// />
+// </Form>
