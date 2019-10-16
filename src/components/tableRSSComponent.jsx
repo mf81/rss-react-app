@@ -10,6 +10,10 @@ import axios from "axios";
 import AddTooDb from "./common/addTooDbTable";
 
 class RssTable extends Component {
+  ip = {
+    localhost: "http://localhost:3000/api/rss/",
+    ip: "http://10.0.254.51:3000/api/rss/"
+  };
   state = {
     data: [],
     pageSize: 100,
@@ -35,7 +39,7 @@ class RssTable extends Component {
       orzeczenieSprzeciw: { label: "Orzeczenie Sprzeciw:", firstSite: false },
       sygnaturaApelacja: { label: "Sygnatura Apelacja:", firstSite: false },
       orzeczenieApelacja: { label: "Orzeczenie Apelacja", firstSite: false },
-      wystapienieOklauzul: {
+      wystapienieOklauzule: {
         label: "Wystapienie Oklauzule:",
         firstSite: false
       },
@@ -62,7 +66,7 @@ class RssTable extends Component {
     }
   };
   async componentDidMount() {
-    const { data } = await axios.get("http://localhost:3000/api/rss");
+    const { data } = await axios.get(this.ip.localhost);
     this.setState({ data });
   }
 
@@ -101,33 +105,25 @@ class RssTable extends Component {
     this.setState({ data: newState });
 
     try {
-      await axios.post("http://localhost:3000/api/rss", data);
+      await axios.post(this.ip.localhost, data);
     } catch {
       this.setState({ data: originalState });
     }
   };
 
-  handleEdit = data => {
-    console.log("OK edit");
-    console.log("Data:", data);
+  handleEdit = async (newData, oldData) => {
+    const originalState = this.state.data;
 
-    //const originalState = this.state.data;
+    const data = [...this.state.data];
+    const index = data.indexOf(oldData);
+    data[index] = { ...newData };
+    this.setState({ data });
 
-    const upData = [...this.state.data];
-    const index = upData.indexOf(data);
-    console.log("index", index);
-    upData[index] = { ...data };
-    console.log("upData", upData);
-    this.setState({ upData });
-
-    // const res = this.state.data.filter(d => d._id !== data._id);
-    // this.setState({ data: res });
-
-    // try {
-    //   await axios.delete("http://localhost:3000/api/rss/" + data._id);
-    // } catch {
-    //   this.setState({ data: originalState });
-    // }
+    try {
+      await axios.put(this.ip.localhost + newData._id, newData);
+    } catch {
+      this.setState({ data: originalState });
+    }
   };
 
   handleDelete = async data => {
@@ -137,7 +133,7 @@ class RssTable extends Component {
     this.setState({ data: res });
 
     try {
-      await axios.delete("http://localhost:3000/api/rss/" + data._id);
+      await axios.delete(this.ip.localhost + data._id);
     } catch {
       this.setState({ data: originalState });
     }

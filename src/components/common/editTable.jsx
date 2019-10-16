@@ -13,7 +13,7 @@ class EditTable extends Form {
   //   console.log("its submitted from edit", this.state.data);
   // };
 
-  doSubmit = () => this.props.onEdit(this.state.data);
+  doSubmit = () => this.props.onEdit(this.state.data, this.props.data);
 
   render() {
     const { fields } = this.props;
