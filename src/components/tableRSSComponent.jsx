@@ -5,11 +5,10 @@ import PrivNext from "./common/paginationPrivNext";
 import { paginate } from "./common/paginate";
 import OnlyTable from "./onlyTableComponent";
 import Popup from "./common/popupComponent";
-import { Button, Navbar, Nav, Form, FormControl } from "react-bootstrap";
+import { Navbar, Nav } from "react-bootstrap";
 import axios from "axios";
 import AddTooDb from "./common/addTooDbTable";
 import Search from "./common/searchComponent";
-import SearchResults from "react-filter-search";
 
 class RssTable extends Component {
   ip = {
@@ -17,60 +16,64 @@ class RssTable extends Component {
     ip: "http://10.0.254.51:3000/api/rss/"
   };
   state = {
+    dataDB: [],
     data: [],
     filter: "",
+    filterAll: false,
+    onFocusSearch: true,
     pageSize: 100,
     currentPage: 1,
+    nF: "Błąd",
     sortColumn: { sortBy: "rok", order: "desc" },
     fields: {
-      imieNazwisko: { label: "Imie, Nazwisko:", firstSite: true },
-      nr: { label: "Nr:", firstSite: true },
-      rok: { label: "Rok:", firstSite: true },
-      rokDW: { label: "Rok DW:", firstSite: true },
-      nrDW: { label: "Nr DW:", firstSite: true },
-      kodLokalu: { label: "Kod lokalu:", firstSite: true },
-      polaczono: { label: "Połączono:", firstSite: true },
-      adres: { label: "Adres:", firstSite: true },
-      wartosc: { label: "Wartość:", firstSite: true },
-      sygnaturaNakaz: { label: "Sygnatura Nakaz:", firstSite: true },
-      rodzaj: { label: "Rodzaj: ", firstSite: false },
-      ADM: { label: "ADM:", firstSite: false },
-      okresDochodzony: { label: "Okres Dochodzony:", firstSite: false },
-      wniesieniePozwu: { label: "Wniesienie Pozwu:", firstSite: false },
-      orzeczenieNakaz: { label: "Orzeczenie Nakaz:", firstSite: false },
-      sygnaturaSprzeciw: { label: "SygnaturaSprzeciw:", firstSite: false },
-      orzeczenieSprzeciw: { label: "Orzeczenie Sprzeciw:", firstSite: false },
-      sygnaturaApelacja: { label: "Sygnatura Apelacja:", firstSite: false },
+      imieNazwisko: { label: "Imie, Nazwisko", firstSite: true },
+      nr: { label: "Nr", firstSite: true },
+      rok: { label: "Rok", firstSite: true },
+      rokDW: { label: "Rok DW", firstSite: true },
+      nrDW: { label: "Nr DW", firstSite: true },
+      kodLokalu: { label: "Kod lokalu", firstSite: true },
+      polaczono: { label: "Połączono", firstSite: true },
+      adres: { label: "Adres", firstSite: true },
+      wartosc: { label: "Wartość", firstSite: true },
+      sygnaturaNakaz: { label: "Sygnatura Nakaz", firstSite: true },
+      rodzaj: { label: "Rodzaj ", firstSite: false },
+      ADM: { label: "ADM", firstSite: false },
+      okresDochodzony: { label: "Okres Dochodzony", firstSite: false },
+      wniesieniePozwu: { label: "Wniesienie Pozwu", firstSite: false },
+      orzeczenieNakaz: { label: "Orzeczenie Nakaz", firstSite: false },
+      sygnaturaSprzeciw: { label: "SygnaturaSprzeciw", firstSite: false },
+      orzeczenieSprzeciw: { label: "Orzeczenie Sprzeciw", firstSite: false },
+      sygnaturaApelacja: { label: "Sygnatura Apelacja", firstSite: false },
       orzeczenieApelacja: { label: "Orzeczenie Apelacja", firstSite: false },
       wystapienieOklauzule: {
-        label: "Wystapienie Oklauzule:",
+        label: "Wystapienie Oklauzule",
         firstSite: false
       },
       wniosekMajatku: { label: "Wniosek Majatku:", firstSite: false },
       sygnAktWyjawienia: {
-        label: "Sygnatura Akt Wyjawienia:",
+        label: "Sygnatura Akt Wyjawienia",
         firstSite: false
       },
       orzeczenieWyjawienia: {
-        label: "Orzeczenie Wyjawienia:",
+        label: "Orzeczenie Wyjawienia",
         firstSite: false
       },
       etapPostEgz: {
-        label: "Etap Postępowania Egzekującego:",
+        label: "Etap Postępowania Egzekującego",
         firstSite: false
       },
       uwagi: { label: "Uwagi:", firstSite: false },
-      przekazanoDoDP: { label: "Przekazano do DP:", firstSite: false },
+      przekazanoDoDP: { label: "Przekazano do DP", firstSite: false },
       rozliczoneZastepstwa: {
-        label: "Rozliczone Zastępstwa:",
+        label: "Rozliczone Zastępstwa",
         firstSite: false
       },
-      radcaPrawny: { label: "Radca Prawny: ", firstSite: false }
+      radcaPrawny: { label: "Radca Prawny", firstSite: false }
     }
   };
   async componentDidMount() {
-    const { data } = await axios.get(this.ip.localhost);
-    this.setState({ data });
+    const { data } = await axios.get(this.ip.ip);
+    this.setState({ data: data, dataDB: data });
   }
 
   handleDelete = dataNew => {
@@ -101,7 +104,7 @@ class RssTable extends Component {
     this.setState({ data: newState });
 
     try {
-      await axios.post(this.ip.localhost, data);
+      await axios.post(this.ip.ip, data);
     } catch {
       this.setState({ data: originalState });
     }
@@ -116,7 +119,7 @@ class RssTable extends Component {
     this.setState({ data });
 
     try {
-      await axios.put(this.ip.localhost + newData._id, newData);
+      await axios.put(this.ip.ip + newData._id, newData);
     } catch {
       this.setState({ data: originalState });
     }
@@ -129,31 +132,79 @@ class RssTable extends Component {
     this.setState({ data: res });
 
     try {
-      await axios.delete(this.ip.localhost + data._id);
+      await axios.delete(this.ip.ip + data._id);
     } catch {
       this.setState({ data: originalState });
     }
   };
 
-  filterSearch = (filter, data) => {
+  filterSearch = (filter, data, itemKey, filterAll) => {
+    if (filterAll) itemKey = "";
     const lowercasedFilter = filter.toLowerCase();
 
-    return data.filter(item => {
-      return Object.keys(item).some(
-        key =>
+    const res = data.filter(item => {
+      return Object.keys(item).some(key => {
+        itemKey && (key = itemKey);
+        return (
           typeof item[key] === "string" &&
           item[key].toLowerCase().includes(lowercasedFilter)
-      );
+        );
+      });
     });
+    //&& filter.length > 3
+    if (Array.isArray(res) && res.length) {
+      this.setState({ notFound: "" });
+      //console.log("Jest");
+      return res;
+    } else {
+      this.setState({ notFound: "Wyszukiwanej frazy nie znaleziono w bazie" });
+      // !res.length && console.log("Nie ma wpisu");
+      return data;
+    }
   };
 
-  handleChange = event => this.setState({ filter: event.target.value });
+  handleChange = e => {
+    console.log("handleChange");
+    this.setState({ currentPage: 1, filter: e.target.value });
+    const filteredData = this.filterSearch(
+      e.target.value,
+      this.state.dataDB,
+      this.state.sortColumn.sortBy,
+      this.state.filterAll
+    );
+    this.setState({ data: filteredData });
+  };
+  searchName = searchBy => {
+    if (this.state.onFocusSearch) {
+      let text;
+      if (this.state.filterAll) {
+        text = "Przeszukujesz baze po wszystkich polach";
+      } else {
+        text =
+          "Przeszukujesz baze po polu: " + this.state.fields[searchBy].label;
+      }
+      return text;
+    } else return "";
+  };
+
+  handleAllSearch = () => {
+    this.setState({ onFocusSearch: true, filterAll: !this.state.filterAll });
+  };
+
+  onFocusSearch = () => {
+    this.setState({ onFocusSearch: false });
+  };
 
   render() {
-    const filteredData = this.filterSearch(this.state.filter, this.state.data);
+    // const filteredData = this.filterSearch(
+    //   this.state.filter,
+    //   this.state.data,
+    //   this.state.sortColumn.sortBy,
+    //   this.state.filterAll
+    // );
 
-    // const { length: count } = this.state.data;
-    const { length: count } = filteredData;
+    //const { length: count } = filteredData;
+    const { length: count } = this.state.data;
     if (count === 0) {
       return <p>Ładuje...</p>;
     }
@@ -168,7 +219,7 @@ class RssTable extends Component {
     //     : this.state.data;
 
     const sorted = _.orderBy(
-      filteredData,
+      this.state.data,
       [this.state.sortColumn.sortBy],
       [this.state.sortColumn.order]
     );
@@ -177,68 +228,67 @@ class RssTable extends Component {
     //   [this.state.sortColumn.sortBy],
     //   [this.state.sortColumn.order]
     // );
-
     const data = paginate(sorted, this.state.currentPage, this.state.pageSize);
-
-    console.log("data:", data);
-    console.log("Pages:", this.state.currentPage, this.state.pageSize);
 
     return (
       <React.Fragment>
         <div className="container-fluid p-0">
           <Navbar bg="primary" variant="dark">
             <Navbar.Brand href="/">Rejestr Spraw Sądowych</Navbar.Brand>
-          </Navbar>
-          <Navbar bg="light" variant="dark" sticky="top">
-            <Search value={this.state.filter} onChange={this.handleChange} />
-
+            <Nav className="mr-auto">
+              <Nav.Link href="#home">Home</Nav.Link>
+              <Nav.Link href="#features">Features</Nav.Link>
+              <Nav.Link href="#pricing">Pricing</Nav.Link>
+            </Nav>
             <Popup
-              label="Dodaj..."
+              label="Dodaj nowy wpis do bazy"
               title="Dodaj wpis do bazy"
               template={
                 <AddTooDb
                   fields={this.state.fields}
-                  doSubmit={this.handleAdd}
+                  doSubmit={() => this.handleAdd()}
                   onClick={() => this.handleAdd()}
                   data={this.state.data}
                   extraProps
                 />
               }
               size="lg"
-              variant="primary"
+              btn="btn-light btn-lg"
               extraProps
             />
+          </Navbar>
+          <Navbar bg="light" variant="dark">
+            <Search
+              value={this.state.filter}
+              onChange={this.handleChange}
+              handleRadio={this.handleRadio}
+              state={this.state.radioBox}
+              placeholder={this.searchName(this.state.sortColumn.sortBy)}
+              handleAll={this.handleAllSearch}
+              filterAll={this.state.filterAll}
+              onFocus={this.onFocusSearch}
+              sortBy={this.state.fields[this.state.sortColumn.sortBy].label}
+              notFound={this.state.notFound}
+            />
+          </Navbar>
+
+          <Navbar bg="light" variant="dark" sticky="top"></Navbar>
+          <Navbar bg="light" variant="dark" sticky="top">
             <Nav className="mr-auto">
               <Pagination
                 itemsCount={count}
                 pageSize={this.state.pageSize}
-                onPageChange={this.handlePageChange}
-                onPriv={this.handlePriv}
-                onNext={this.handelNext}
+                onPageChange={() => this.handlePageChange()}
+                onPriv={() => this.handlePriv()}
+                onNext={() => this.handelNext()}
                 currentPage={this.state.currentPage}
-                onPageSize={this.handlePageSize}
+                onPageSize={() => this.handlePageSize()}
+                onFocus={this.onFocusSearch}
               />
             </Nav>
           </Navbar>
           <div className="row">
             <div className="col">
-              {/* <SearchResults
-                value={this.state.valueSearch}
-                data={data}
-                renderResults={results => {
-                  return (
-                    <OnlyTable
-                      fields={this.state.fields}
-                      data={results}
-                      sortColumn={this.state.sortColumn}
-                      onEdit={this.handleEdit}
-                      onDelete={this.handleDelete}
-                      onSort={this.handleSort}
-                    />
-                  );
-                }}
-              /> */}
-
               <OnlyTable
                 fields={this.state.fields}
                 data={data}
