@@ -16,7 +16,6 @@ class RssTable extends Component {
     ip: "http://10.0.254.51:3000/api/rss/"
   };
   state = {
-    dataDB: [],
     data: [],
     filter: "",
     filterAll: false,
@@ -72,8 +71,8 @@ class RssTable extends Component {
     }
   };
   async componentDidMount() {
-    const { data } = await axios.get(this.ip.ip);
-    this.setState({ data: data, dataDB: data });
+    const { data } = await axios.get(this.ip.localhost);
+    this.setState({ data });
   }
 
   handleDelete = dataNew => {
@@ -104,7 +103,7 @@ class RssTable extends Component {
     this.setState({ data: newState });
 
     try {
-      await axios.post(this.ip.ip, data);
+      await axios.post(this.ip.localhost, data);
     } catch {
       this.setState({ data: originalState });
     }
@@ -119,7 +118,7 @@ class RssTable extends Component {
     this.setState({ data });
 
     try {
-      await axios.put(this.ip.ip + newData._id, newData);
+      await axios.put(this.ip.localhost + newData._id, newData);
     } catch {
       this.setState({ data: originalState });
     }
@@ -132,7 +131,7 @@ class RssTable extends Component {
     this.setState({ data: res });
 
     try {
-      await axios.delete(this.ip.ip + data._id);
+      await axios.delete(this.ip.localhost + data._id);
     } catch {
       this.setState({ data: originalState });
     }
@@ -153,27 +152,18 @@ class RssTable extends Component {
     });
     //&& filter.length > 3
     if (Array.isArray(res) && res.length) {
-      this.setState({ notFound: "" });
-      //console.log("Jest");
+      // this.setState({ notFound: "Wyszukiwanej frazy nie znaleziono w bazie" });
+      console.log("Jest");
       return res;
     } else {
-      this.setState({ notFound: "Wyszukiwanej frazy nie znaleziono w bazie" });
-      // !res.length && console.log("Nie ma wpisu");
+      //this.setState({ notFound: "Wyszukiwanej frazy nie znaleziono w bazie" });
+      !res.length && console.log("Nie ma wpisu");
       return data;
     }
   };
 
-  handleChange = e => {
-    console.log("handleChange");
-    this.setState({ currentPage: 1, filter: e.target.value });
-    const filteredData = this.filterSearch(
-      e.target.value,
-      this.state.dataDB,
-      this.state.sortColumn.sortBy,
-      this.state.filterAll
-    );
-    this.setState({ data: filteredData });
-  };
+  handleChange = e => this.setState({ currentPage: 1, filter: e.target.value });
+
   searchName = searchBy => {
     if (this.state.onFocusSearch) {
       let text;
@@ -196,18 +186,17 @@ class RssTable extends Component {
   };
 
   render() {
-    // const filteredData = this.filterSearch(
-    //   this.state.filter,
-    //   this.state.data,
-    //   this.state.sortColumn.sortBy,
-    //   this.state.filterAll
-    // );
+    const filteredData = this.filterSearch(
+      this.state.filter,
+      this.state.data,
+      this.state.sortColumn.sortBy,
+      this.state.filterAll
+    );
 
-    //const { length: count } = filteredData;
-    const { length: count } = this.state.data;
-    if (count === 0) {
-      return <p>Ładuje...</p>;
-    }
+    const { length: count } = filteredData;
+    // if (count === 0) {
+    //   return <p>Ładuje...</p>;
+    // }
     const pagesCount = Math.ceil(count / this.state.pageSize);
     const pages = _.range(1, pagesCount + 1);
 
@@ -219,7 +208,7 @@ class RssTable extends Component {
     //     : this.state.data;
 
     const sorted = _.orderBy(
-      this.state.data,
+      filteredData,
       [this.state.sortColumn.sortBy],
       [this.state.sortColumn.order]
     );
@@ -278,11 +267,11 @@ class RssTable extends Component {
               <Pagination
                 itemsCount={count}
                 pageSize={this.state.pageSize}
-                onPageChange={() => this.handlePageChange()}
-                onPriv={() => this.handlePriv()}
-                onNext={() => this.handelNext()}
+                onPageChange={this.handlePageChange}
+                onPriv={this.handlePriv}
+                onNext={this.handelNext}
                 currentPage={this.state.currentPage}
-                onPageSize={() => this.handlePageSize()}
+                onPageSize={this.handlePageSize}
                 onFocus={this.onFocusSearch}
               />
             </Nav>

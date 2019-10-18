@@ -25,7 +25,7 @@ const Search = ({
         ) : (
           <FontAwesomeIcon icon={faToggleOff} />
         )}
-        {filterAll ? "Wszystkie" : sortBy}
+        {filterAll ? "Wszystkie" : " Szukam po: " + sortBy}
       </Button>
       <input
         id="valueSearch"
