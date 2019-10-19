@@ -1,5 +1,6 @@
 import React from "react";
 import Form from "./form";
+//import Joi from "joi-browser";
 
 class EditTable extends Form {
   componentWillMount() {
