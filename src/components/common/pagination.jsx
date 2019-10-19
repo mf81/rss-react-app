@@ -17,7 +17,7 @@ const Pagination = props => {
   const pagesCount = Math.ceil(itemsCount / pageSize);
   if (pagesCount !== 1) {
     return (
-      <div className="container">
+      <div className="container mr-auto">
         <PageSize pageSize={pageSize} onPageSize={onPageSize} />
         <Pages
           onPageChange={onPageChange}

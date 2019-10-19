@@ -3,7 +3,7 @@ import React from "react";
 const AmountSum = ({ data, item }) => {
   let text = data[item];
   let sum;
-  const regexConstructor = new RegExp("\\(\\d+,?\\d+\\+\\d+,?\\d+\\)");
+  const regexConstructor = new RegExp("\\(\\d+(\\,\\d+)?\\+\\d+(\\,\\d+)?\\)");
   if (regexConstructor.test(text)) {
     text = text
       .replace("(", "")

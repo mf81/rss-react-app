@@ -6,7 +6,7 @@ class AddTooDb extends FormComponent {
   doSubmit = () => this.props.doSubmit(this.state.data);
 
   render() {
-    const { fields, handleClose, onClick } = this.props;
+    const { fields, handleClose } = this.props;
     return (
       <React.Fragment>
         <form onSubmit={this.handleSubmit}>
@@ -19,9 +19,6 @@ class AddTooDb extends FormComponent {
             Anuluj
           </Button>
         </form>
-        <Button variant="secondary m-2" onClick={onClick}>
-          Zapisz poza
-        </Button>
       </React.Fragment>
     );
   }
