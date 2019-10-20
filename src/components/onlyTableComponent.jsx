@@ -28,6 +28,16 @@ class OnlyTable extends Component {
 
   render() {
     const { data, onDelete, fields, onEdit, filter } = this.props;
+    //console.log(data[0].notFound);
+    //console.log(data[1]);
+    //Object.keys(item).some(
+    //Object.keys(fields).map((item, i) => {
+    //console.log(Object.keys(data).map(item => data[item]));
+    console.log(
+      data.some(item => {
+        return item.notFound;
+      })
+    );
     return (
       <React.Fragment>
         <table className="table table-striped">
@@ -205,7 +215,9 @@ class OnlyTable extends Component {
             </tr>
           </thead>
           <tbody key="tableComponentBody">
-            {!filter &&
+            {!data.some(item => {
+              return item.notFound;
+            }) &&
               data.map((data, i) => (
                 <tr key={data._id + "-tr"}>
                   <td key={data._id + "-id"}>{i + 1}</td>
@@ -314,9 +326,11 @@ class OnlyTable extends Component {
               ))}
           </tbody>
         </table>
-        {filter ? (
+        {filter && data[0].notFound && (
           <div className="alert alert-danger m-2">{data[0].notFound}</div>
-        ) : (
+        )}
+
+        {!data.length && (
           <div className="alert alert-success m-2">
             Czekaj na załadowanie bazy danych albo sobie gdzieś idź ... :)
           </div>

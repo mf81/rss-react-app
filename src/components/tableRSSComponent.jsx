@@ -151,7 +151,7 @@ class RssTable extends Component {
       });
     });
     //&& filter.length > 3
-    console.log("filter.length", filter.length);
+    //console.log("filter.length", filter.length);
     if (Array.isArray(res) && res.length) {
       // this.setState({ notFound: "Wyszukiwanej frazy nie znaleziono w bazie" });
       //console.log("Jest");
@@ -163,7 +163,7 @@ class RssTable extends Component {
         (data = [
           {
             notFound:
-              "Brak wyniku wyszukiwania - spróbuj wpisać inną fraze i powodzenia :)"
+              "Brak wyniku wyszukiwania - nie denerwuj się, spokojnie, spróbuj wpisać inną frazę i powodzenia :)"
           }
         ]);
       return data;
