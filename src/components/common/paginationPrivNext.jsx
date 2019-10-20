@@ -1,7 +1,12 @@
 import React from "react";
+import _ from "lodash";
 
 const PaginationPrivNext = props => {
-  const { onClick, currentPage, pages, label, maxValue } = props;
+  const { onClick, currentPage, count, pageSize, label, maxValue } = props;
+
+  const pagesCount = Math.ceil(count / pageSize);
+  const pages = _.range(1, pagesCount + 1);
+
   const hrefLink = "#";
   let activeSwitch = "page-item";
 

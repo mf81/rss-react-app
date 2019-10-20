@@ -75,11 +75,6 @@ class RssTable extends Component {
     this.setState({ data });
   }
 
-  handleDelete = dataNew => {
-    const data = this.state.data.filter(f => f._id !== dataNew._id);
-    this.setState({ data });
-  };
-
   handlePageChange = page => this.setState({ currentPage: page });
 
   handlePriv = () => {
@@ -137,40 +132,8 @@ class RssTable extends Component {
     }
   };
 
-  filterSearch = (filter, data, itemKey, filterAll) => {
-    if (filterAll) itemKey = "";
-    const lowercasedFilter = filter.toLowerCase();
-
-    const res = data.filter(item => {
-      return Object.keys(item).some(key => {
-        itemKey && (key = itemKey);
-        return (
-          typeof item[key] === "string" &&
-          item[key].toLowerCase().includes(lowercasedFilter)
-        );
-      });
-    });
-    //&& filter.length > 3
-    //console.log("filter.length", filter.length);
-    if (Array.isArray(res) && res.length) {
-      // this.setState({ notFound: "Wyszukiwanej frazy nie znaleziono w bazie" });
-      //console.log("Jest");
-      return res;
-    } else {
-      //this.setState({ notFound: "Wyszukiwanej frazy nie znaleziono w bazie" });
-      //!res.length && console.log("Nie ma wpisu");
-      filter.length &&
-        (data = [
-          {
-            notFound:
-              "Brak wyniku wyszukiwania - nie denerwuj się, spokojnie, spróbuj wpisać inną frazę i powodzenia :)"
-          }
-        ]);
-      return data;
-    }
-  };
-
   handleChange = e => this.setState({ currentPage: 1, filter: e.target.value });
+  onFocusSearch = () => this.setState({ onFocusSearch: false });
 
   searchName = searchBy => {
     if (this.state.onFocusSearch) {
@@ -193,8 +156,31 @@ class RssTable extends Component {
     });
   };
 
-  onFocusSearch = () => {
-    this.setState({ onFocusSearch: false });
+  filterSearch = (filter, data, itemKey, filterAll) => {
+    filterAll && (itemKey = "");
+    const lowercasedFilter = filter.toLowerCase();
+
+    const res = data.filter(item => {
+      return Object.keys(item).some(key => {
+        itemKey && (key = itemKey);
+        return (
+          typeof item[key] === "string" &&
+          item[key].toLowerCase().includes(lowercasedFilter)
+        );
+      });
+    });
+    if (Array.isArray(res) && res.length) {
+      return res;
+    } else {
+      filter.length &&
+        (data = [
+          {
+            notFound:
+              "Brak wyniku wyszukiwania - nie denerwuj się, spokojnie, spróbuj wpisać inną frazę i powodzenia :)"
+          }
+        ]);
+      return data;
+    }
   };
 
   render() {
@@ -206,29 +192,13 @@ class RssTable extends Component {
     );
 
     const { length: count } = filteredData;
-    // if (count === 0) {
-    //   return <p>Ładuje...</p>;
-    // }
-    const pagesCount = Math.ceil(count / this.state.pageSize);
-    const pages = _.range(1, pagesCount + 1);
-
-    // const filtred =
-    //   this.state.selectedGenres && this.state.selectedGenres._id !== "0"
-    //     ? this.state.data.filter(
-    //         f => f.genres._id === this.state.selectedGenres._id
-    //       )
-    //     : this.state.data;
 
     const sorted = _.orderBy(
       filteredData,
       [this.state.sortColumn.sortBy],
       [this.state.sortColumn.order]
     );
-    // const sorted = _.orderBy(
-    //   this.state.data,
-    //   [this.state.sortColumn.sortBy],
-    //   [this.state.sortColumn.order]
-    // );
+
     const data = paginate(sorted, this.state.currentPage, this.state.pageSize);
 
     return (
@@ -261,14 +231,13 @@ class RssTable extends Component {
             <Search
               value={this.state.filter}
               onChange={this.handleChange}
-              handleRadio={this.handleRadio}
-              state={this.state.radioBox}
               placeholder={this.searchName(this.state.sortColumn.sortBy)}
               handleAll={this.handleAllSearch}
               filterAll={this.state.filterAll}
               onFocus={this.onFocusSearch}
-              sortBy={this.state.fields[this.state.sortColumn.sortBy].label}
               notFound={this.state.notFound}
+              sortBy={this.state.sortColumn.sortBy}
+              fields={this.state.fields}
             />
           </Navbar>
 
@@ -306,15 +275,17 @@ class RssTable extends Component {
                 <nav aria-label="Page navigation mx-auto">
                   <ul className="pagination pagination-lg ">
                     <PrivNext
+                      count={count}
+                      pageSize={this.state.pageSize}
                       onClick={() => this.handlePriv()}
                       currentPage={this.state.currentPage}
-                      pages={pages}
                       label="Poprzednia"
                     />
                     <PrivNext
+                      count={count}
+                      pageSize={this.state.pageSize}
                       onClick={() => this.handelNext()}
                       currentPage={this.state.currentPage}
-                      pages={pages}
                       label="Następna"
                       maxValue
                     />
@@ -330,13 +301,3 @@ class RssTable extends Component {
 }
 
 export default RssTable;
-
-// <Form inline>
-// <FormControl
-//   type="text"
-//   placeholder="Wpisz szukaną frazę"
-//   className="mr-sm-2"
-//   value={this.state.valueSearch || ""}
-//   onChange={this.handleSearch}
-// />
-// </Form>

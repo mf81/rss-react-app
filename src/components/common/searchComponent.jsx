@@ -1,43 +1,48 @@
 import React from "react";
-import { Button } from "react-bootstrap";
+import { Button, InputGroup, FormControl } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faToggleOn, faToggleOff } from "@fortawesome/free-solid-svg-icons";
+import { faPowerOff } from "@fortawesome/free-solid-svg-icons";
+
+// faToggleOn,
+// faToggleOff,
 
 const Search = ({
   value,
   onChange,
   handleAll,
-  state,
   placeholder,
   filterAll,
   onFocus,
+  notFound,
   sortBy,
-  notFound
+  fields
 }) => {
   return (
     <React.Fragment>
       <Button
-        variant={filterAll ? "success m-2" : "outline-success m-2"}
+        variant={filterAll ? "outline-success m-2" : "success m-2"}
         onClick={handleAll}
       >
-        {filterAll ? (
-          <FontAwesomeIcon icon={faToggleOn} />
-        ) : (
-          <FontAwesomeIcon icon={faToggleOff} />
-        )}
-        {filterAll ? "Wszystkie" : " Szukam po: " + sortBy}
+        <FontAwesomeIcon icon={faPowerOff} />
       </Button>
-      <input
-        id="valueSearch"
-        name="valueSearch"
-        key="valueSearch"
-        type="text"
-        value={value}
-        onChange={onChange}
-        className="form-control"
-        placeholder={placeholder}
-        onFocus={onFocus}
-      />
+
+      <InputGroup className="m-2">
+        <InputGroup.Prepend>
+          <InputGroup.Text id="basic-addon1">
+            {filterAll ? "Wszystkie:" : fields[sortBy].label + ":"}
+          </InputGroup.Text>
+        </InputGroup.Prepend>
+        <FormControl
+          id="valueSearch"
+          name="valueSearch"
+          key="valueSearch"
+          type="text"
+          value={value}
+          onChange={onChange}
+          placeholder={placeholder}
+          onFocus={onFocus}
+        />
+      </InputGroup>
 
       {notFound && <div className="alert alert-danger m-2">{notFound}</div>}
     </React.Fragment>

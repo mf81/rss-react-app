@@ -3,7 +3,15 @@ import _ from "lodash";
 import PrivNext from "./paginationPrivNext";
 
 const Pages = props => {
-  const { onPageChange, currentPage, onPriv, onNext, pagesCount } = props;
+  const {
+    onPageChange,
+    currentPage,
+    onPriv,
+    onNext,
+    pagesCount,
+    itemsCount,
+    pageSize
+  } = props;
   const hrefLink = "#";
   const pages = _.range(1, pagesCount + 1);
 
@@ -35,12 +43,16 @@ const Pages = props => {
       <nav aria-label="Page navigation">
         <ul className="pagination pagination-sm flex-wrap">
           <PrivNext
+            count={itemsCount}
+            pageSize={pageSize}
             onClick={() => onPriv()}
             currentPage={currentPage}
             pages={pages}
             label="Poprzednia"
           />
           <PrivNext
+            count={itemsCount}
+            pageSize={pageSize}
             onClick={() => onNext()}
             currentPage={currentPage}
             pages={pages}

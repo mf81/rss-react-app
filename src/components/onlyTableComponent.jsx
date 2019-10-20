@@ -28,16 +28,6 @@ class OnlyTable extends Component {
 
   render() {
     const { data, onDelete, fields, onEdit, filter } = this.props;
-    //console.log(data[0].notFound);
-    //console.log(data[1]);
-    //Object.keys(item).some(
-    //Object.keys(fields).map((item, i) => {
-    //console.log(Object.keys(data).map(item => data[item]));
-    console.log(
-      data.some(item => {
-        return item.notFound;
-      })
-    );
     return (
       <React.Fragment>
         <table className="table table-striped">

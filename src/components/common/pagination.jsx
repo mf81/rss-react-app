@@ -20,6 +20,8 @@ const Pagination = props => {
       <div className="container mr-auto">
         <PageSize pageSize={pageSize} onPageSize={onPageSize} />
         <Pages
+          itemsCount={itemsCount}
+          pageSize={pageSize}
           onPageChange={onPageChange}
           onPriv={onPriv}
           onNext={onNext}
