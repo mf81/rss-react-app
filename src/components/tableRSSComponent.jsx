@@ -9,6 +9,7 @@ import { Navbar, Nav } from "react-bootstrap";
 import axios from "axios";
 import AddTooDb from "./common/addTooDbTable";
 import Search from "./common/searchComponent";
+import SearchMany from "./common/searchManyComponent";
 
 class RssTable extends Component {
   ip = {
@@ -25,53 +26,158 @@ class RssTable extends Component {
     nF: "Błąd",
     sortColumn: { sortBy: "rok", order: "desc" },
     fields: {
-      imieNazwisko: { label: "Imie, Nazwisko", firstSite: true },
-      nr: { label: "Nr", firstSite: true },
-      rok: { label: "Rok", firstSite: true },
-      rokDW: { label: "Rok DW", firstSite: true },
-      nrDW: { label: "Nr DW", firstSite: true },
-      kodLokalu: { label: "Kod lokalu", firstSite: true },
-      polaczono: { label: "Połączono", firstSite: true },
-      adres: { label: "Adres", firstSite: true },
-      wartosc: { label: "Wartość", firstSite: true },
-      sygnaturaNakaz: { label: "Sygnatura Nakaz", firstSite: true },
-      rodzaj: { label: "Rodzaj ", firstSite: false },
-      ADM: { label: "ADM", firstSite: false },
-      okresDochodzony: { label: "Okres Dochodzony", firstSite: false },
-      wniesieniePozwu: { label: "Wniesienie Pozwu", firstSite: false },
-      orzeczenieNakaz: { label: "Orzeczenie Nakaz", firstSite: false },
-      sygnaturaSprzeciw: { label: "SygnaturaSprzeciw", firstSite: false },
-      orzeczenieSprzeciw: { label: "Orzeczenie Sprzeciw", firstSite: false },
-      sygnaturaApelacja: { label: "Sygnatura Apelacja", firstSite: false },
-      orzeczenieApelacja: { label: "Orzeczenie Apelacja", firstSite: false },
+      imieNazwisko: {
+        label: "Imie, Nazwisko",
+        firstSite: true,
+        search: false,
+        searchValue: ""
+      },
+      nr: { label: "Nr", firstSite: true, search: false, searchValue: "" },
+      rok: { label: "Rok", firstSite: true, search: true, searchValue: "" },
+      rokDW: {
+        label: "Rok DW",
+        firstSite: true,
+        search: false,
+        searchValue: ""
+      },
+      nrDW: { label: "Nr DW", firstSite: true, search: false, searchValue: "" },
+      kodLokalu: {
+        label: "Kod lokalu",
+        firstSite: true,
+        search: false,
+        searchValue: ""
+      },
+      polaczono: {
+        label: "Połączono",
+        firstSite: true,
+        search: false,
+        searchValue: ""
+      },
+      adres: {
+        label: "Adres",
+        firstSite: true,
+        search: false,
+        searchValue: ""
+      },
+      wartosc: {
+        label: "Wartość",
+        firstSite: true,
+        search: false,
+        searchValue: ""
+      },
+      sygnaturaNakaz: {
+        label: "Sygnatura Nakaz",
+        firstSite: true,
+        search: false,
+        searchValue: ""
+      },
+      rodzaj: {
+        label: "Rodzaj ",
+        firstSite: false,
+        search: false,
+        searchValue: ""
+      },
+      ADM: { label: "ADM", firstSite: false, search: false, searchValue: "" },
+      okresDochodzony: {
+        label: "Okres Dochodzony",
+        firstSite: false,
+        search: false,
+        searchValue: ""
+      },
+      wniesieniePozwu: {
+        label: "Wniesienie Pozwu",
+        firstSite: false,
+        search: false,
+        searchValue: ""
+      },
+      orzeczenieNakaz: {
+        label: "Orzeczenie Nakaz",
+        firstSite: false,
+        search: false,
+        searchValue: ""
+      },
+      sygnaturaSprzeciw: {
+        label: "SygnaturaSprzeciw",
+        firstSite: false,
+        search: false,
+        searchValue: ""
+      },
+      orzeczenieSprzeciw: {
+        label: "Orzeczenie Sprzeciw",
+        firstSite: false,
+        search: false,
+        searchValue: ""
+      },
+      sygnaturaApelacja: {
+        label: "Sygnatura Apelacja",
+        firstSite: false,
+        search: false,
+        searchValue: ""
+      },
+      orzeczenieApelacja: {
+        label: "Orzeczenie Apelacja",
+        firstSite: false,
+        search: false,
+        searchValue: ""
+      },
       wystapienieOklauzule: {
         label: "Wystapienie Oklauzule",
-        firstSite: false
+        firstSite: false,
+        search: false,
+        searchValue: ""
       },
-      wniosekMajatku: { label: "Wniosek Majatku:", firstSite: false },
+      wniosekMajatku: {
+        label: "Wniosek Majatku:",
+        firstSite: false,
+        search: false,
+        searchValue: ""
+      },
       sygnAktWyjawienia: {
         label: "Sygnatura Akt Wyjawienia",
-        firstSite: false
+        firstSite: false,
+        search: false,
+        searchValue: ""
       },
       orzeczenieWyjawienia: {
         label: "Orzeczenie Wyjawienia",
-        firstSite: false
+        firstSite: false,
+        search: false,
+        searchValue: ""
       },
       etapPostEgz: {
         label: "Etap Postępowania Egzekującego",
-        firstSite: false
+        firstSite: false,
+        search: false,
+        searchValue: ""
       },
-      uwagi: { label: "Uwagi:", firstSite: false },
-      przekazanoDoDP: { label: "Przekazano do DP", firstSite: false },
+      uwagi: {
+        label: "Uwagi:",
+        firstSite: false,
+        search: false,
+        searchValue: ""
+      },
+      przekazanoDoDP: {
+        label: "Przekazano do DP",
+        firstSite: false,
+        search: false,
+        searchValue: ""
+      },
       rozliczoneZastepstwa: {
         label: "Rozliczone Zastępstwa",
-        firstSite: false
+        firstSite: false,
+        search: false,
+        searchValue: ""
       },
-      radcaPrawny: { label: "Radca Prawny", firstSite: false }
+      radcaPrawny: {
+        label: "Radca Prawny",
+        firstSite: false,
+        search: false,
+        searchValue: ""
+      }
     }
   };
   async componentDidMount() {
-    const { data } = await axios.get(this.ip.localhost);
+    const { data } = await axios.get(this.ip.ip);
     this.setState({ data });
   }
 
@@ -98,7 +204,7 @@ class RssTable extends Component {
     this.setState({ data: newState });
 
     try {
-      await axios.post(this.ip.localhost, data);
+      await axios.post(this.ip.ip, data);
     } catch {
       this.setState({ data: originalState });
     }
@@ -113,7 +219,7 @@ class RssTable extends Component {
     this.setState({ data });
 
     try {
-      await axios.put(this.ip.localhost + newData._id, newData);
+      await axios.put(this.ip.ip + newData._id, newData);
     } catch {
       this.setState({ data: originalState });
     }
@@ -126,7 +232,7 @@ class RssTable extends Component {
     this.setState({ data: res });
 
     try {
-      await axios.delete(this.ip.localhost + data._id);
+      await axios.delete(this.ip.ip + data._id);
     } catch {
       this.setState({ data: originalState });
     }
@@ -183,23 +289,84 @@ class RssTable extends Component {
     }
   };
 
+  filterSearchMany = (data, filterAll) => {
+    const { fields } = this.state;
+    Object.keys(fields)
+      .filter(item => fields[item].search)
+      .map(item => {
+        const { search, searchValue } = fields[item];
+        if (search && searchValue.length) {
+          data = this.filterSearch(searchValue, data, item, filterAll);
+        }
+        return data;
+      });
+    return data;
+  };
+
+  handleOnOffSearch = ({ target }) => {
+    const { fields } = this.state;
+    const { name, value } = target;
+    let valueAdd = "";
+    !fields[name].search ? (valueAdd = "") : (valueAdd = value);
+
+    this.setState({
+      fields: {
+        ...fields,
+        [name]: {
+          ...fields[name],
+          search: !fields[name].search,
+          searchValue: valueAdd
+        }
+      }
+    });
+  };
+
+  onChangeSearchMany = ({ target }) => {
+    const { fields } = this.state;
+    const { name, value } = target;
+    console.log("target", name, value);
+    this.setState({
+      fields: {
+        ...fields,
+        [name]: {
+          ...fields[name],
+          searchValue: value
+        }
+      }
+    });
+  };
+
   render() {
-    const filteredData = this.filterSearch(
-      this.state.filter,
-      this.state.data,
-      this.state.sortColumn.sortBy,
-      this.state.filterAll
-    );
+    const {
+      fields,
+      filter,
+      sortColumn,
+      filterAll,
+      currentPage,
+      pageSize
+    } = this.state;
+
+    // const filteredData = this.filterSearch(
+    //   filter,
+    //   this.state.data,
+    //   sortColumn.sortBy,
+    //   filterAll
+    // );
+
+    let filteredData = [];
+    if (this.state.data.length) {
+      filteredData = this.filterSearchMany(this.state.data, filterAll);
+    } else filteredData = "";
 
     const { length: count } = filteredData;
 
     const sorted = _.orderBy(
       filteredData,
-      [this.state.sortColumn.sortBy],
-      [this.state.sortColumn.order]
+      [sortColumn.sortBy],
+      [sortColumn.order]
     );
 
-    const data = paginate(sorted, this.state.currentPage, this.state.pageSize);
+    const data = paginate(sorted, currentPage, pageSize);
 
     return (
       <React.Fragment>
@@ -216,7 +383,7 @@ class RssTable extends Component {
               title="Dodaj wpis do bazy"
               template={
                 <AddTooDb
-                  fields={this.state.fields}
+                  fields={fields}
                   doSubmit={this.handleAdd}
                   data={this.state.data}
                   extraProps
@@ -229,28 +396,34 @@ class RssTable extends Component {
           </Navbar>
           <Navbar bg="light" variant="dark">
             <Search
-              value={this.state.filter}
+              value={filter}
               onChange={this.handleChange}
-              placeholder={this.searchName(this.state.sortColumn.sortBy)}
+              placeholder={this.searchName(sortColumn.sortBy)}
               handleAll={this.handleAllSearch}
-              filterAll={this.state.filterAll}
+              filterAll={filterAll}
               onFocus={this.onFocusSearch}
               notFound={this.state.notFound}
-              sortBy={this.state.sortColumn.sortBy}
-              fields={this.state.fields}
+              sortBy={sortColumn.sortBy}
+              fields={fields}
             />
           </Navbar>
 
-          <Navbar bg="light" variant="dark" sticky="top"></Navbar>
+          <Navbar bg="light" variant="dark" sticky="top">
+            <SearchMany
+              fields={fields}
+              handleOnOffSearch={this.handleOnOffSearch}
+              onChangeSearchMany={this.onChangeSearchMany}
+            />
+          </Navbar>
           <Navbar bg="light" variant="dark" sticky="top">
             <Nav className="mr-auto">
               <Pagination
                 itemsCount={count}
-                pageSize={this.state.pageSize}
+                pageSize={pageSize}
                 onPageChange={this.handlePageChange}
                 onPriv={this.handlePriv}
                 onNext={this.handelNext}
-                currentPage={this.state.currentPage}
+                currentPage={currentPage}
                 onPageSize={this.handlePageSize}
                 onFocus={this.onFocusSearch}
               />
@@ -259,13 +432,13 @@ class RssTable extends Component {
           <div className="row">
             <div className="col">
               <OnlyTable
-                fields={this.state.fields}
+                fields={fields}
                 data={data}
-                sortColumn={this.state.sortColumn}
+                sortColumn={sortColumn}
                 onEdit={this.handleEdit}
                 onDelete={this.handleDelete}
                 onSort={this.handleSort}
-                filter={this.state.filter}
+                filter={filter}
               />
             </div>
           </div>
@@ -276,16 +449,16 @@ class RssTable extends Component {
                   <ul className="pagination pagination-lg ">
                     <PrivNext
                       count={count}
-                      pageSize={this.state.pageSize}
-                      onClick={() => this.handlePriv()}
-                      currentPage={this.state.currentPage}
+                      pageSize={pageSize}
+                      onClick={this.handlePriv}
+                      currentPage={currentPage}
                       label="Poprzednia"
                     />
                     <PrivNext
                       count={count}
-                      pageSize={this.state.pageSize}
-                      onClick={() => this.handelNext()}
-                      currentPage={this.state.currentPage}
+                      pageSize={pageSize}
+                      onClick={this.handelNext}
+                      currentPage={currentPage}
                       label="Następna"
                       maxValue
                     />

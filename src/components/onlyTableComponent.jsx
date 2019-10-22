@@ -3,6 +3,7 @@ import Popup from "./common/popupComponent";
 import DetailsTable from "./common/tableDetales";
 import Items from "./common/items";
 import DeleteTable from "./common/deleteTable";
+import { Spinner } from "react-bootstrap";
 
 class OnlyTable extends Component {
   riseSort = sort => {
@@ -322,7 +323,10 @@ class OnlyTable extends Component {
 
         {!data.length && (
           <div className="alert alert-success m-2">
-            Czekaj na załadowanie bazy danych albo sobie gdzieś idź ... :)
+            <Spinner animation="border" size="sm" />
+            <span className="m-3">
+              Czekaj na załadowanie bazy danych albo sobie gdzieś idź ... :)
+            </span>
           </div>
         )}
       </React.Fragment>
