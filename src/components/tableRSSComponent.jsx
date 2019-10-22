@@ -19,11 +19,10 @@ class RssTable extends Component {
   state = {
     data: [],
     filter: "",
-    filterAll: false,
+    filterAll: true,
     onFocusSearch: true,
     pageSize: 100,
     currentPage: 1,
-    nF: "Błąd",
     sortColumn: { sortBy: "rok", order: "desc" },
     fields: {
       imieNazwisko: {
@@ -33,7 +32,7 @@ class RssTable extends Component {
         searchValue: ""
       },
       nr: { label: "Nr", firstSite: true, search: false, searchValue: "" },
-      rok: { label: "Rok", firstSite: true, search: true, searchValue: "" },
+      rok: { label: "Rok", firstSite: true, search: false, searchValue: "" },
       rokDW: {
         label: "Rok DW",
         firstSite: true,
@@ -151,7 +150,7 @@ class RssTable extends Component {
         searchValue: ""
       },
       uwagi: {
-        label: "Uwagi:",
+        label: "Uwagi",
         firstSite: false,
         search: false,
         searchValue: ""
@@ -177,7 +176,7 @@ class RssTable extends Component {
     }
   };
   async componentDidMount() {
-    const { data } = await axios.get(this.ip.ip);
+    const { data } = await axios.get(this.ip.localhost);
     this.setState({ data });
   }
 
@@ -204,7 +203,7 @@ class RssTable extends Component {
     this.setState({ data: newState });
 
     try {
-      await axios.post(this.ip.ip, data);
+      await axios.post(this.ip.localhost, data);
     } catch {
       this.setState({ data: originalState });
     }
@@ -219,7 +218,7 @@ class RssTable extends Component {
     this.setState({ data });
 
     try {
-      await axios.put(this.ip.ip + newData._id, newData);
+      await axios.put(this.ip.localhost + newData._id, newData);
     } catch {
       this.setState({ data: originalState });
     }
@@ -232,13 +231,30 @@ class RssTable extends Component {
     this.setState({ data: res });
 
     try {
-      await axios.delete(this.ip.ip + data._id);
+      await axios.delete(this.ip.localhost + data._id);
     } catch {
       this.setState({ data: originalState });
     }
   };
 
-  handleChange = e => this.setState({ currentPage: 1, filter: e.target.value });
+  // handleChange = e => this.setState({ currentPage: 1, filter: e.target.value });
+
+  // handleChange = ({ target }) => {
+  //   const { fields } = this.state;
+  //   const { name, value } = target;
+  //   this.setState({
+  //     currentPage: 1,
+  //     fields: {
+  //       ...fields,
+  //       [name]: {
+  //         ...fields[name],
+  //         search: !fields[name].search,
+  //         searchValue: valueAdd
+  //       }
+  //     }
+  //   });
+  // };
+
   onFocusSearch = () => this.setState({ onFocusSearch: false });
 
   searchName = searchBy => {
@@ -248,7 +264,8 @@ class RssTable extends Component {
         text = "Przeszukujesz baze po wszystkich polach";
       } else {
         text =
-          "Przeszukujesz baze po polu: " + this.state.fields[searchBy].label;
+          "Przeszukujesz i sortujesz baze po polu: " +
+          this.state.fields[searchBy].label;
       }
       return text;
     } else return "";
@@ -308,7 +325,6 @@ class RssTable extends Component {
     const { name, value } = target;
     let valueAdd = "";
     !fields[name].search ? (valueAdd = "") : (valueAdd = value);
-
     this.setState({
       fields: {
         ...fields,
@@ -324,13 +340,13 @@ class RssTable extends Component {
   onChangeSearchMany = ({ target }) => {
     const { fields } = this.state;
     const { name, value } = target;
-    console.log("target", name, value);
     this.setState({
       fields: {
         ...fields,
         [name]: {
           ...fields[name],
-          searchValue: value
+          searchValue: value,
+          search: true
         }
       }
     });
@@ -345,13 +361,6 @@ class RssTable extends Component {
       currentPage,
       pageSize
     } = this.state;
-
-    // const filteredData = this.filterSearch(
-    //   filter,
-    //   this.state.data,
-    //   sortColumn.sortBy,
-    //   filterAll
-    // );
 
     let filteredData = [];
     if (this.state.data.length) {
@@ -396,8 +405,7 @@ class RssTable extends Component {
           </Navbar>
           <Navbar bg="light" variant="dark">
             <Search
-              value={filter}
-              onChange={this.handleChange}
+              onChange={this.onChangeSearchMany}
               placeholder={this.searchName(sortColumn.sortBy)}
               handleAll={this.handleAllSearch}
               filterAll={filterAll}
@@ -407,14 +415,16 @@ class RssTable extends Component {
               fields={fields}
             />
           </Navbar>
-
-          <Navbar bg="light" variant="dark" sticky="top">
-            <SearchMany
-              fields={fields}
-              handleOnOffSearch={this.handleOnOffSearch}
-              onChangeSearchMany={this.onChangeSearchMany}
-            />
-          </Navbar>
+          {!filterAll && (
+            <Navbar bg="light" variant="dark" sticky="top">
+              <SearchMany
+                fields={fields}
+                handleOnOffSearch={this.handleOnOffSearch}
+                onChangeSearchMany={this.onChangeSearchMany}
+                sortBy={sortColumn.sortBy}
+              />
+            </Navbar>
+          )}
           <Navbar bg="light" variant="dark" sticky="top">
             <Nav className="mr-auto">
               <Pagination

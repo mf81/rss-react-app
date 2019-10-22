@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPowerOff } from "@fortawesome/free-solid-svg-icons";
 
 const Search = ({
-  value,
   onChange,
   handleAll,
   placeholder,
@@ -31,11 +30,11 @@ const Search = ({
         </InputGroup.Prepend>
         <FormControl
           className="input-group-sm"
-          id="valueSearch"
-          name="valueSearch"
-          key="valueSearch"
+          id={sortBy}
+          name={sortBy}
+          key={sortBy}
           type="text"
-          value={value}
+          value={fields[sortBy].searchValue}
           onChange={onChange}
           placeholder={placeholder}
           onFocus={onFocus}
