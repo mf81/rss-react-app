@@ -237,24 +237,6 @@ class RssTable extends Component {
     }
   };
 
-  // handleChange = e => this.setState({ currentPage: 1, filter: e.target.value });
-
-  // handleChange = ({ target }) => {
-  //   const { fields } = this.state;
-  //   const { name, value } = target;
-  //   this.setState({
-  //     currentPage: 1,
-  //     fields: {
-  //       ...fields,
-  //       [name]: {
-  //         ...fields[name],
-  //         search: !fields[name].search,
-  //         searchValue: valueAdd
-  //       }
-  //     }
-  //   });
-  // };
-
   onFocusSearch = () => this.setState({ onFocusSearch: false });
 
   searchName = searchBy => {
@@ -326,6 +308,7 @@ class RssTable extends Component {
     let valueAdd = "";
     !fields[name].search ? (valueAdd = "") : (valueAdd = value);
     this.setState({
+      currentPage: 1,
       fields: {
         ...fields,
         [name]: {
@@ -341,6 +324,7 @@ class RssTable extends Component {
     const { fields } = this.state;
     const { name, value } = target;
     this.setState({
+      currentPage: 1,
       fields: {
         ...fields,
         [name]: {
