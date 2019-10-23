@@ -336,6 +336,15 @@ class RssTable extends Component {
     });
   };
 
+  handleResetAll = () => {
+    const fields = { ...this.state.fields };
+    Object.keys(fields).map(i => {
+      fields[i].searchValue = "";
+      return (fields[i].search = false);
+    });
+    this.setState(fields);
+  };
+
   render() {
     const {
       fields,
@@ -405,6 +414,7 @@ class RssTable extends Component {
                 fields={fields}
                 handleOnOffSearch={this.handleOnOffSearch}
                 onChangeSearchMany={this.onChangeSearchMany}
+                handleResetAll={this.handleResetAll}
                 sortBy={sortColumn.sortBy}
               />
             </Navbar>

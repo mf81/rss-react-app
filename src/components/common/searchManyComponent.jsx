@@ -1,4 +1,6 @@
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPowerOff, faTrashRestore } from "@fortawesome/free-solid-svg-icons";
 import {
   Button,
   InputGroup,
@@ -9,12 +11,19 @@ import {
 const SearchMany = ({
   fields,
   handleOnOffSearch,
+  handleResetAll,
   onChangeSearchMany,
   sortBy
 }) => {
   return (
     <React.Fragment>
       <ButtonToolbar>
+        <Button
+          //   variant={filterAll ? "outline-success m-2" : "success m-2"}
+          onClick={handleResetAll}
+        >
+          <FontAwesomeIcon icon={faTrashRestore} size="sm" />
+        </Button>
         {Object.keys(fields).map(item => {
           return (
             sortBy !== item && (
