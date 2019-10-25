@@ -1,7 +1,7 @@
 import React from "react";
 import Items from "./items";
 
-const TablePopup = ({ fields, data }) => {
+const TablePopup = ({ fields, data, color }) => {
   return (
     <table className="table table-striped">
       <thead>

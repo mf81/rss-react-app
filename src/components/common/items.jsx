@@ -2,8 +2,9 @@ import React from "react";
 import Popup from "./popupComponent";
 import EditTable from "./editTable";
 import AmountSum from "./amountSumComponent";
+import color from "./colorDetails";
 
-const Items = ({ data, item, fields, onEdit }) => {
+const Items = ({ data, item, fields, onEdit, comment }) => {
   switch (item) {
     case "imieNazwisko":
       return (
@@ -12,9 +13,10 @@ const Items = ({ data, item, fields, onEdit }) => {
           title="Edytuj wpis"
           template={<EditTable data={data} fields={fields} onEdit={onEdit} />}
           size="lg"
-          variant="outline-primary"
+          variant={color(data)}
           closeButton="Zamknij bez zapisania"
           extraProps
+          comment={comment}
         />
       );
     case "wartosc":

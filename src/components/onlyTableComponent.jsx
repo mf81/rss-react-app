@@ -4,6 +4,10 @@ import DetailsTable from "./common/tableDetales";
 import Items from "./common/items";
 import DeleteTable from "./common/deleteTable";
 import { Spinner } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCommentDots, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+
+//faCommentDots
 
 class OnlyTable extends Component {
   riseSort = sort => {
@@ -35,6 +39,7 @@ class OnlyTable extends Component {
           <thead>
             <tr>
               <th key="lp">LP.</th>
+              <th />
               <th
                 onClick={() => this.riseSort("imieNazwisko")}
                 style={{ cursor: "pointer" }}
@@ -202,7 +207,6 @@ class OnlyTable extends Component {
                 </p>
               </th>
               <th />
-              <th />
             </tr>
           </thead>
           <tbody key="tableComponentBody">
@@ -212,6 +216,15 @@ class OnlyTable extends Component {
               data.map((data, i) => (
                 <tr key={data._id + "-tr"}>
                   <td key={data._id + "-id"}>{i + 1}</td>
+                  <td>
+                    <Popup
+                      label={<FontAwesomeIcon icon={faCommentDots} />}
+                      title={data.imieNazwisko}
+                      template={<DetailsTable data={data} fields={fields} />}
+                      variant="primary"
+                      closeButton="Zamknij"
+                    />
+                  </td>
                   <td key={data._id + "-imieNazwisko"}>
                     <Items
                       data={data}
@@ -219,6 +232,7 @@ class OnlyTable extends Component {
                       fields={fields}
                       onEdit={onEdit}
                       key={data._id}
+                      comment={data.uwagi}
                     />
                   </td>
                   <td key={data._id + "-nr"}>
@@ -293,24 +307,14 @@ class OnlyTable extends Component {
                       onEdit={onEdit}
                     />
                   </td>
-
                   <td>
                     <Popup
-                      label="X"
+                      label={<FontAwesomeIcon icon={faTrashAlt} />}
                       title="Kasuj wpis"
                       template={<DeleteTable onClick={() => onDelete(data)} />}
                       size="sm"
                       btn="btn-danger"
                       extraProps
-                    />
-                  </td>
-                  <td>
-                    <Popup
-                      label="..."
-                      title={data.imieNazwisko}
-                      template={<DetailsTable data={data} fields={fields} />}
-                      variant="primary"
-                      closeButton="Zamknij"
                     />
                   </td>
                 </tr>
