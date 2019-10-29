@@ -19,7 +19,7 @@ const PaginationPrivNext = props => {
   return (
     <li className={activeSwitch}>
       <a
-        className="page-link"
+        className="page-link m-2"
         onClick={() => onClick()}
         style={{ cursor: "pointer" }}
         href={hrefLink}

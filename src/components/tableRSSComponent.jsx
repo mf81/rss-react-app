@@ -5,24 +5,16 @@ import PrivNext from "./common/paginationPrivNext";
 import { paginate } from "./common/paginate";
 import OnlyTable from "./onlyTableComponent";
 import Popup from "./common/popupComponent";
-import {
-  Navbar,
-  Nav,
-  Tooltip,
-  OverlayTrigger,
-  Button,
-  ButtonToolbar
-} from "react-bootstrap";
+import { Navbar, Nav } from "react-bootstrap";
 import axios from "axios";
 import AddTooDb from "./common/addTooDbTable";
 import Search from "./common/searchComponent";
 import SearchMany from "./common/searchManyComponent";
 
 class RssTable extends Component {
-  ip = {
-    localhost: "http://localhost:3000/api/rss/",
-    ip: "http://10.0.254.51:3000/api/rss/"
-  };
+  BACKEND_INTERFACE = "http://localhost:3000/api/rss/";
+  //BACKEND_INTERFACE = "http://10.0.254.51:3000/api/rss/";
+
   state = {
     data: [],
     filter: "",
@@ -183,7 +175,7 @@ class RssTable extends Component {
     }
   };
   async componentDidMount() {
-    const { data } = await axios.get(this.ip.ip);
+    const { data } = await axios.get(this.BACKEND_INTERFACE);
     this.setState({ data });
   }
 
@@ -210,7 +202,7 @@ class RssTable extends Component {
     this.setState({ data: newState });
 
     try {
-      await axios.post(this.ip.ip, data);
+      await axios.post(this.BACKEND_INTERFACE, data);
     } catch {
       this.setState({ data: originalState });
     }
@@ -225,7 +217,7 @@ class RssTable extends Component {
     this.setState({ data });
 
     try {
-      await axios.put(this.ip.ip + newData._id, newData);
+      await axios.put(this.BACKEND_INTERFACE + newData._id, newData);
     } catch {
       this.setState({ data: originalState });
     }
@@ -238,7 +230,7 @@ class RssTable extends Component {
     this.setState({ data: res });
 
     try {
-      await axios.delete(this.ip.ip + data._id);
+      await axios.delete(this.BACKEND_INTERFACE + data._id);
     } catch {
       this.setState({ data: originalState });
     }
@@ -376,7 +368,6 @@ class RssTable extends Component {
     );
 
     const data = paginate(sorted, currentPage, pageSize);
-    const placement = "place";
     return (
       <React.Fragment>
         <div className="container-fluid p-0">
@@ -403,7 +394,6 @@ class RssTable extends Component {
               extraProps
             />
           </Navbar>
-
           <Navbar bg="light" variant="dark">
             <Search
               onChange={this.onChangeSearchMany}

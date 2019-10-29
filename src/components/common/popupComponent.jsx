@@ -29,8 +29,6 @@ const Popup = ({
     comm = comment.toString().split(":")[1];
   } else comm = comment;
 
-  console.log(comm);
-
   return (
     <React.Fragment>
       {comment ? (
@@ -65,7 +63,6 @@ const Popup = ({
           {label}
         </Button>
       )}
-
       <Modal show={show} onHide={handleClose} size={size}>
         <Modal.Header closeButton>
           <Modal.Title>{title}</Modal.Title>
