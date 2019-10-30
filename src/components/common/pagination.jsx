@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Pages from "./paginationPages";
 import PageSize from "./paginationPageSize";
+import { Container, Row, Col } from "react-bootstrap";
 
 const Pagination = props => {
   const {
@@ -17,19 +18,25 @@ const Pagination = props => {
   const pagesCount = Math.ceil(itemsCount / pageSize);
   if (pagesCount !== 1) {
     return (
-      <div className="container mr-auto">
-        <PageSize pageSize={pageSize} onPageSize={onPageSize} />
-        <Pages
-          itemsCount={itemsCount}
-          pageSize={pageSize}
-          onPageChange={onPageChange}
-          onPriv={onPriv}
-          onNext={onNext}
-          currentPage={currentPage}
-          onPageSize={onPageSize}
-          pagesCount={pagesCount}
-        />
-      </div>
+      <Container>
+        <Row>
+          <Col xs={6} md="auto">
+            <Pages
+              itemsCount={itemsCount}
+              pageSize={pageSize}
+              onPageChange={onPageChange}
+              onPriv={onPriv}
+              onNext={onNext}
+              currentPage={currentPage}
+              onPageSize={onPageSize}
+              pagesCount={pagesCount}
+            />
+          </Col>
+          <Col xs={6} md="auto">
+            <PageSize pageSize={pageSize} onPageSize={onPageSize} />
+          </Col>
+        </Row>
+      </Container>
     );
   } else {
     return (

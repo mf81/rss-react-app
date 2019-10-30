@@ -6,7 +6,7 @@ const PageSize = props => {
   return (
     <div className="row justify-content-md-center">
       <nav aria-label="Page navigation 2">
-        <ul className="pagination pagination-sm">
+        <ul className="pagination pagination-sm m-2">
           {pageSizeNew.map(p => (
             <li
               className={pageSize === p ? "page-item active" : "page-item"}
