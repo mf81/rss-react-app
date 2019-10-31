@@ -1,5 +1,12 @@
 import React from "react";
-import { Button, InputGroup, FormControl } from "react-bootstrap";
+import {
+  Button,
+  InputGroup,
+  FormControl,
+  Container,
+  Row,
+  Col
+} from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPowerOff } from "@fortawesome/free-solid-svg-icons";
 
@@ -14,35 +21,40 @@ const Search = ({
   fields
 }) => {
   return (
-    <React.Fragment>
-      <Button
-        variant={filterAll ? "outline-success m-2" : "success m-2"}
-        onClick={handleAll}
-      >
-        <FontAwesomeIcon icon={faPowerOff} />
-      </Button>
+    <Container fluid>
+      <Row>
+        <Col md={1}>
+          <Button
+            variant={filterAll ? "outline-success m-2" : "success m-2"}
+            onClick={handleAll}
+          >
+            <FontAwesomeIcon icon={faPowerOff} />
+          </Button>
+        </Col>
+        <Col md={11}>
+          <InputGroup className="m-2">
+            <InputGroup.Prepend>
+              <InputGroup.Text id="basic-addon1">
+                {filterAll ? "Wszystkie:" : fields[sortBy].label + ":"}
+              </InputGroup.Text>
+            </InputGroup.Prepend>
+            <FormControl
+              className="input-group-sm"
+              id={sortBy}
+              name={sortBy}
+              key={sortBy}
+              type="text"
+              value={fields[sortBy].searchValue}
+              onChange={onChange}
+              placeholder={placeholder}
+              onFocus={onFocus}
+            />
+          </InputGroup>
 
-      <InputGroup className="m-2">
-        <InputGroup.Prepend>
-          <InputGroup.Text id="basic-addon1">
-            {filterAll ? "Wszystkie:" : fields[sortBy].label + ":"}
-          </InputGroup.Text>
-        </InputGroup.Prepend>
-        <FormControl
-          className="input-group-sm"
-          id={sortBy}
-          name={sortBy}
-          key={sortBy}
-          type="text"
-          value={fields[sortBy].searchValue}
-          onChange={onChange}
-          placeholder={placeholder}
-          onFocus={onFocus}
-        />
-      </InputGroup>
-
-      {notFound && <div className="alert alert-danger m-2">{notFound}</div>}
-    </React.Fragment>
+          {notFound && <div className="alert alert-danger m-2">{notFound}</div>}
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

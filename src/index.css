@@ -30,3 +30,7 @@ code {
   height: 250px;
   overflow-y: scroll;
 }
+
+.container {
+  max-width: "100%";
+}

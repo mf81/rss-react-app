@@ -5,7 +5,7 @@ import PrivNext from "./common/paginationPrivNext";
 import { paginate } from "./common/paginate";
 import OnlyTable from "./onlyTableComponent";
 import Popup from "./common/popupComponent";
-import { Navbar, Nav } from "react-bootstrap";
+import { Navbar, Nav, Container, Row, Col } from "react-bootstrap";
 import axios from "axios";
 import AddTooDb from "./common/addTooDbTable";
 import Search from "./common/searchComponent";
@@ -369,108 +369,114 @@ class RssTable extends Component {
 
     const data = paginate(sorted, currentPage, pageSize);
     return (
-      <React.Fragment>
-        <div className="container-fluid p-0">
-          <Navbar bg="primary" variant="dark">
-            <Navbar.Brand href="/">Rejestr Spraw Sądowych</Navbar.Brand>
-            <Nav className="mr-auto">
-              <Nav.Link href="#home">Home</Nav.Link>
-              <Nav.Link href="#features">Features</Nav.Link>
-              <Nav.Link href="#pricing">Pricing</Nav.Link>
-            </Nav>
-            <Popup
-              label="Dodaj nowy wpis do bazy"
-              title="Dodaj wpis do bazy"
-              template={
-                <AddTooDb
-                  fields={fields}
-                  doSubmit={this.handleAdd}
-                  data={this.state.data}
-                  extraProps
-                />
-              }
-              size="lg"
-              btn="btn-light btn-lg"
-              extraProps
-            />
-          </Navbar>
-          <Navbar bg="light" variant="dark">
-            <Search
-              onChange={this.onChangeSearchMany}
-              placeholder={this.searchName(sortColumn.sortBy)}
-              handleAll={this.handleAllSearch}
-              filterAll={filterAll}
-              onFocus={this.onFocusSearch}
-              notFound={this.state.notFound}
-              sortBy={sortColumn.sortBy}
-              fields={fields}
-            />
-          </Navbar>
-          {!filterAll && (
-            <Navbar bg="light" variant="dark" sticky="top">
-              <SearchMany
-                fields={fields}
-                handleOnOffSearch={this.handleOnOffSearch}
-                onChangeSearchMany={this.onChangeSearchMany}
-                handleResetAll={this.handleResetAll}
-                sortBy={sortColumn.sortBy}
+      <Container fluid className="p-0">
+        <Row className="sticky-top bg-light">
+          <Col>
+            <Navbar bg="primary" variant="dark">
+              <Navbar.Brand href="/">Rejestr Spraw Sądowych</Navbar.Brand>
+              <Nav className="mr-auto">
+                <Nav.Link href="/">Odśwież</Nav.Link>
+                <Nav.Link href="#features">Features</Nav.Link>
+                <Nav.Link href="#pricing">Pricing</Nav.Link>
+              </Nav>
+              <Popup
+                label="Dodaj nowy wpis do bazy"
+                title="Dodaj wpis do bazy"
+                template={
+                  <AddTooDb
+                    fields={fields}
+                    doSubmit={this.handleAdd}
+                    data={this.state.data}
+                    extraProps
+                  />
+                }
+                size="lg"
+                btn="btn-light btn-lg"
+                extraProps
               />
             </Navbar>
-          )}
-          <Navbar bg="light" variant="dark" sticky="top">
-            <Nav className="mr-auto">
-              <Pagination
-                itemsCount={count}
-                pageSize={pageSize}
-                onPageChange={this.handlePageChange}
-                onPriv={this.handlePriv}
-                onNext={this.handelNext}
-                currentPage={currentPage}
-                onPageSize={this.handlePageSize}
-                onFocus={this.onFocusSearch}
-              />
-            </Nav>
-          </Navbar>
-          <div className="row">
-            <div className="col">
-              <OnlyTable
-                fields={fields}
-                data={data}
-                sortColumn={sortColumn}
-                onEdit={this.handleEdit}
-                onDelete={this.handleDelete}
-                onSort={this.handleSort}
-                filter={filter}
-              />
-            </div>
-          </div>
-          <div className="row">
-            <div className="col">
-              <div className="text-center">
-                <nav aria-label="Page navigation mx-auto">
-                  <ul className="pagination pagination-lg ">
-                    <PrivNext
-                      count={count}
-                      pageSize={pageSize}
-                      onClick={this.handlePriv}
-                      currentPage={currentPage}
-                      label="Poprzednia"
+            <Container fluid className="sticky-top bg-light">
+              <Row>
+                <Col md={12}>
+                  <Search
+                    onChange={this.onChangeSearchMany}
+                    placeholder={this.searchName(sortColumn.sortBy)}
+                    handleAll={this.handleAllSearch}
+                    filterAll={filterAll}
+                    onFocus={this.onFocusSearch}
+                    notFound={this.state.notFound}
+                    sortBy={sortColumn.sortBy}
+                    fields={fields}
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col md={12}>
+                  <Pagination
+                    itemsCount={count}
+                    pageSize={pageSize}
+                    onPageChange={this.handlePageChange}
+                    onPriv={this.handlePriv}
+                    onNext={this.handelNext}
+                    currentPage={currentPage}
+                    onPageSize={this.handlePageSize}
+                    onFocus={this.onFocusSearch}
+                  />
+                </Col>
+              </Row>
+              {!filterAll && (
+                <Row>
+                  <Col>
+                    <SearchMany
+                      fields={fields}
+                      handleOnOffSearch={this.handleOnOffSearch}
+                      onChangeSearchMany={this.onChangeSearchMany}
+                      handleResetAll={this.handleResetAll}
+                      sortBy={sortColumn.sortBy}
                     />
-                    <PrivNext
-                      count={count}
-                      pageSize={pageSize}
-                      onClick={this.handelNext}
-                      currentPage={currentPage}
-                      label="Następna"
-                      maxValue
-                    />
-                  </ul>
-                </nav>
-              </div>
-            </div>
-          </div>
-        </div>
-      </React.Fragment>
+                  </Col>
+                </Row>
+              )}
+            </Container>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <OnlyTable
+              fields={fields}
+              data={data}
+              sortColumn={sortColumn}
+              onEdit={this.handleEdit}
+              onDelete={this.handleDelete}
+              onSort={this.handleSort}
+              filter={filter}
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <nav aria-label="Page navigation mx-auto">
+              <ul className="pagination pagination-lg ">
+                <PrivNext
+                  count={count}
+                  pageSize={pageSize}
+                  onClick={this.handlePriv}
+                  currentPage={currentPage}
+                  label="Poprzednia"
+                />
+                <PrivNext
+                  count={count}
+                  pageSize={pageSize}
+                  onClick={this.handelNext}
+                  currentPage={currentPage}
+                  label="Następna"
+                  maxValue
+                />
+              </ul>
+            </nav>
+          </Col>
+        </Row>
+      </Container>
     );
   }
 }

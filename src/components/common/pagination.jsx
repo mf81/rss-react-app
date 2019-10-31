@@ -18,9 +18,9 @@ const Pagination = props => {
   const pagesCount = Math.ceil(itemsCount / pageSize);
   if (pagesCount !== 1) {
     return (
-      <Container>
+      <Container fluid>
         <Row>
-          <Col xs={6} md="auto">
+          <Col xs={6} md={6}>
             <Pages
               itemsCount={itemsCount}
               pageSize={pageSize}
@@ -32,7 +32,7 @@ const Pagination = props => {
               pagesCount={pagesCount}
             />
           </Col>
-          <Col xs={6} md="auto">
+          <Col xs={6} md={6}>
             <PageSize pageSize={pageSize} onPageSize={onPageSize} />
           </Col>
         </Row>
