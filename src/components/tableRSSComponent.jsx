@@ -5,11 +5,12 @@ import PrivNext from "./common/paginationPrivNext";
 import { paginate } from "./common/paginate";
 import OnlyTable from "./onlyTableComponent";
 import Popup from "./common/popupComponent";
-import { Navbar, Nav, Container, Row, Col } from "react-bootstrap";
+import { Button, Navbar, Nav, Container, Row, Col } from "react-bootstrap";
 import axios from "axios";
 import AddTooDb from "./common/addTooDbTable";
 import Search from "./common/searchComponent";
 import SearchMany from "./common/searchManyComponent";
+import Author from "./common/author";
 
 class RssTable extends Component {
   BACKEND_INTERFACE = "http://localhost:3000/api/rss/";
@@ -344,6 +345,10 @@ class RssTable extends Component {
     this.setState(fields);
   };
 
+  handleAuthor = () => {
+    console.log("OK");
+  };
+
   render() {
     const {
       fields,
@@ -375,9 +380,13 @@ class RssTable extends Component {
             <Navbar bg="primary" variant="dark">
               <Navbar.Brand href="/">Rejestr Spraw Sądowych</Navbar.Brand>
               <Nav className="mr-auto">
-                <Nav.Link href="/">Odśwież</Nav.Link>
-                <Nav.Link href="#features">Features</Nav.Link>
-                <Nav.Link href="#pricing">Pricing</Nav.Link>
+                <Popup
+                  label="Pomoc techniczna"
+                  title="Aplikacja:"
+                  template={<Author />}
+                  variant="link text-light"
+                  closeButton="Zamknij"
+                />
               </Nav>
               <Popup
                 label="Dodaj nowy wpis do bazy"
@@ -394,6 +403,9 @@ class RssTable extends Component {
                 btn="btn-light btn-lg"
                 extraProps
               />
+              <Button variant={"btn btn-light btn-sm m-1"} href="/">
+                Odśwież
+              </Button>
             </Navbar>
             <Container fluid className="sticky-top bg-light">
               <Row>
@@ -410,6 +422,19 @@ class RssTable extends Component {
                   />
                 </Col>
               </Row>
+              {!filterAll && (
+                <Row>
+                  <Col>
+                    <SearchMany
+                      fields={fields}
+                      handleOnOffSearch={this.handleOnOffSearch}
+                      onChangeSearchMany={this.onChangeSearchMany}
+                      handleResetAll={this.handleResetAll}
+                      sortBy={sortColumn.sortBy}
+                    />
+                  </Col>
+                </Row>
+              )}
               <Row>
                 <Col md={12}>
                   <Pagination
@@ -424,19 +449,6 @@ class RssTable extends Component {
                   />
                 </Col>
               </Row>
-              {!filterAll && (
-                <Row>
-                  <Col>
-                    <SearchMany
-                      fields={fields}
-                      handleOnOffSearch={this.handleOnOffSearch}
-                      onChangeSearchMany={this.onChangeSearchMany}
-                      handleResetAll={this.handleResetAll}
-                      sortBy={sortColumn.sortBy}
-                    />
-                  </Col>
-                </Row>
-              )}
             </Container>
           </Col>
         </Row>

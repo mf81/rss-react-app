@@ -23,9 +23,11 @@ const Search = ({
   return (
     <Container fluid>
       <Row>
-        <Col md={1}>
+        <Col md="auto">
           <Button
-            variant={filterAll ? "outline-success m-2" : "success m-2"}
+            variant={
+              filterAll ? "outline-success m-2 mx-auto" : "success m-2 mx-auto"
+            }
             onClick={handleAll}
           >
             <FontAwesomeIcon icon={faPowerOff} />
