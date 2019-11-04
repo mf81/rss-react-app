@@ -1,39 +1,48 @@
 export default data => {
+  const greeenLabel = ["zielony:", "zielone:", "spłaco", "spłaca", "splaco"];
+  const blueLabel = ["niebieski:", "niebieskie:", "umorzo"];
+  const yellowLabel = ["żółty:", "żółte:", "raty"];
+  const blackLabel = [
+    "czarny:",
+    "czarne:",
+    "zgon",
+    "zmarł",
+    "śmierć",
+    "zmarl",
+    "smierc"
+  ];
+  const redLabel = ["czerwony:", "czerwone:"];
+
   if (data.uwagi) {
     if (
-      data.uwagi.toLowerCase().includes("zielony:") ||
-      data.uwagi.toLowerCase().includes("zielone:") ||
-      data.uwagi.toLowerCase().includes("spłaco") ||
-      data.uwagi.toLowerCase().includes("spłaca") ||
-      data.uwagi.toLowerCase().includes("splaco")
+      greeenLabel.some(substring =>
+        data.uwagi.toLowerCase().includes(substring)
+      )
     ) {
       return "success";
     }
+
     if (
-      data.uwagi.toLowerCase().includes("niebieski:") ||
-      data.uwagi.toLowerCase().includes("niebieskie:") ||
-      data.uwagi.toLowerCase().includes("umorzo")
+      blueLabel.some(substring => data.uwagi.toLowerCase().includes(substring))
     ) {
       return "primary";
     }
+
     if (
-      data.uwagi.toLowerCase().includes("żółty:") ||
-      data.uwagi.toLowerCase().includes("żółte:") ||
-      data.uwagi.toLowerCase().includes("raty")
+      yellowLabel.some(substring =>
+        data.uwagi.toLowerCase().includes(substring)
+      )
     ) {
       return "warning";
     }
     if (
-      data.uwagi.toLowerCase().includes("czarny:") ||
-      data.uwagi.toLowerCase().includes("czarne:") ||
-      data.uwagi.toLowerCase().includes("zgon") ||
-      data.uwagi.toLowerCase().includes("zmarł")
+      blackLabel.some(substring => data.uwagi.toLowerCase().includes(substring))
     ) {
       return "dark";
     }
+
     if (
-      data.uwagi.toLowerCase().includes("czerwony:") ||
-      data.uwagi.toLowerCase().includes("czerwone:")
+      redLabel.some(substring => data.uwagi.toLowerCase().includes(substring))
     ) {
       return "danger";
     }
