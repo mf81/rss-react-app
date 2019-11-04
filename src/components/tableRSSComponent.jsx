@@ -21,7 +21,7 @@ class RssTable extends Component {
     filter: "",
     filterAll: true,
     onFocusSearch: true,
-    pageSize: 100,
+    pageSize: 25,
     currentPage: 1,
     sortColumn: { sortBy: "rok", order: "desc" },
     fields: {
