@@ -5,7 +5,7 @@ import Items from "./common/items";
 import DeleteTable from "./common/deleteTable";
 import { Spinner } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCommentDots, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { faTrashAlt, faUserEdit } from "@fortawesome/free-solid-svg-icons";
 import EditTable from "./common/editTable";
 import color from "./common/colorDetails";
 
@@ -220,7 +220,7 @@ class OnlyTable extends Component {
                   <td key={data._id + "-id"}>{i + 1}</td>
                   <td>
                     <Popup
-                      label={<FontAwesomeIcon icon={faCommentDots} />}
+                      label={<FontAwesomeIcon icon={faUserEdit} />}
                       title="Edytuj wpis"
                       template={
                         <EditTable
