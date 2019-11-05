@@ -1,11 +1,6 @@
 import React, { useState } from "react";
-import {
-  Tooltip,
-  OverlayTrigger,
-  Button,
-  ButtonToolbar,
-  Modal
-} from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
+import ButtonToolTip from "./buttonToolTip";
 
 const uuidv1 = require("uuid/v1");
 const Popup = ({
@@ -17,13 +12,15 @@ const Popup = ({
   size,
   extraProps,
   variant,
-  comment
+  comment,
+  extraComment,
+  placement
 }) => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const placement = uuidv1();
+  const key = uuidv1();
   let comm;
   if (comment && comment.indexOf(":") !== -1) {
     comm = comment.toString().split(":")[1];
@@ -32,27 +29,15 @@ const Popup = ({
   return (
     <React.Fragment>
       {comment ? (
-        <ButtonToolbar>
-          <OverlayTrigger
-            key={placement}
-            placement="right"
-            overlay={
-              <Tooltip id={`tooltip-${placement}`}>
-                <strong>Uwagi: </strong>
-                {comment && comm}
-              </Tooltip>
-            }
-          >
-            <Button
-              variant={
-                variant ? variant + " btn-sm " + btn : " primary btn-sm " + btn
-              }
-              onClick={handleShow}
-            >
-              {label}
-            </Button>
-          </OverlayTrigger>
-        </ButtonToolbar>
+        <ButtonToolTip
+          key={key}
+          variant={variant}
+          handleShow={handleShow}
+          label={label}
+          comment={comm}
+          extraComment={extraComment}
+          placement={placement}
+        />
       ) : (
         <Button
           variant={

@@ -6,6 +6,8 @@ import DeleteTable from "./common/deleteTable";
 import { Spinner } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCommentDots, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import EditTable from "./common/editTable";
+import color from "./common/colorDetails";
 
 //faCommentDots
 
@@ -219,93 +221,61 @@ class OnlyTable extends Component {
                   <td>
                     <Popup
                       label={<FontAwesomeIcon icon={faCommentDots} />}
-                      title={data.imieNazwisko}
-                      template={<DetailsTable data={data} fields={fields} />}
-                      variant="primary"
-                      closeButton="Zamknij"
+                      title="Edytuj wpis"
+                      template={
+                        <EditTable
+                          data={data}
+                          fields={fields}
+                          onEdit={onEdit}
+                        />
+                      }
+                      size="lg"
+                      variant={color(data)}
+                      closeButton="Zamknij bez zapisania"
+                      extraProps
+                      comment="Edytuj wpis..."
+                      placement="top"
                     />
                   </td>
                   <td key={data._id + "-imieNazwisko"}>
-                    <Items
-                      data={data}
-                      item={"imieNazwisko"}
-                      fields={fields}
-                      onEdit={onEdit}
-                      key={data._id}
+                    <Popup
+                      label={
+                        data.imieNazwisko ? data.imieNazwisko : "brak wartości"
+                      }
+                      title={data.imieNazwisko}
+                      template={<DetailsTable data={data} fields={fields} />}
+                      closeButton="Zamknij"
+                      extraComment="Uwagi"
                       comment={data.uwagi}
+                      variant={color(data)}
                     />
                   </td>
                   <td key={data._id + "-nr"}>
-                    <Items
-                      data={data}
-                      item={"nr"}
-                      fields={fields}
-                      onEdit={onEdit}
-                    />
+                    <Items data={data} item={"nr"} />
                   </td>
                   <td key={data._id + "-rok"}>
-                    <Items
-                      data={data}
-                      item={"rok"}
-                      fields={fields}
-                      onEdit={onEdit}
-                    />
+                    <Items data={data} item={"rok"} />
                   </td>
                   <td key={data._id + "-rokDW"}>
-                    <Items
-                      data={data}
-                      item={"rokDW"}
-                      fields={fields}
-                      onEdit={onEdit}
-                    />
+                    <Items data={data} item={"rokDW"} />
                   </td>
                   <td key={data._id + "-nrDW"}>
-                    <Items
-                      data={data}
-                      item={"nrDW"}
-                      fields={fields}
-                      onEdit={onEdit}
-                    />
+                    <Items data={data} item={"nrDW"} />
                   </td>
                   <td key={data._id + "-kodLokalu"}>
-                    <Items
-                      data={data}
-                      item={"kodLokalu"}
-                      fields={fields}
-                      onEdit={onEdit}
-                    />
+                    <Items data={data} item={"kodLokalu"} />
                   </td>
                   <td key={data._id + "-polaczono"}>
-                    <Items
-                      data={data}
-                      item={"polaczono"}
-                      fields={fields}
-                      onEdit={onEdit}
-                    />
+                    <Items data={data} item={"polaczono"} />
                   </td>
                   <td key={data._id + "-adres"}>
-                    <Items
-                      data={data}
-                      item={"adres"}
-                      fields={fields}
-                      onEdit={onEdit}
-                    />
+                    <Items data={data} item={"adres"} />
                   </td>
                   <td key={data._id + "-wartosc"}>
-                    <Items
-                      data={data}
-                      item={"wartosc"}
-                      fields={fields}
-                      onEdit={onEdit}
-                    />
+                    <Items data={data} item={"wartosc"} />
                   </td>
                   <td key={data._id + "-sygnaturaNakaz"}>
-                    <Items
-                      data={data}
-                      item={"sygnaturaNakaz"}
-                      fields={fields}
-                      onEdit={onEdit}
-                    />
+                    <Items data={data} item={"sygnaturaNakaz"} />
                   </td>
                   <td>
                     <Popup
@@ -313,8 +283,10 @@ class OnlyTable extends Component {
                       title="Kasuj wpis"
                       template={<DeleteTable onClick={() => onDelete(data)} />}
                       size="sm"
-                      btn="btn-danger"
                       extraProps
+                      comment="Kasuj wpis..."
+                      variant="danger"
+                      placement="left"
                     />
                   </td>
                 </tr>

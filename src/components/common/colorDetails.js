@@ -2,6 +2,7 @@ export default data => {
   const greeenLabel = ["zielony:", "zielone:", "spłaco", "spłaca", "splaco"];
   const blueLabel = ["niebieski:", "niebieskie:", "umorzo"];
   const yellowLabel = ["żółty:", "żółte:", "raty"];
+  const redLabel = ["czerwony:", "czerwone:"];
   const blackLabel = [
     "czarny:",
     "czarne:",
@@ -11,41 +12,26 @@ export default data => {
     "zmarl",
     "smierc"
   ];
-  const redLabel = ["czerwony:", "czerwone:"];
+  let variant;
 
-  if (data.uwagi) {
-    if (
-      greeenLabel.some(substring =>
-        data.uwagi.toLowerCase().includes(substring)
-      )
-    ) {
-      return "success";
-    }
+  greeenLabel.some(
+    str => data.uwagi && data.uwagi.toLowerCase().includes(str)
+  ) && (variant = "success");
 
-    if (
-      blueLabel.some(substring => data.uwagi.toLowerCase().includes(substring))
-    ) {
-      return "primary";
-    }
+  blueLabel.some(str => data.uwagi && data.uwagi.toLowerCase().includes(str)) &&
+    (variant = "primary");
 
-    if (
-      yellowLabel.some(substring =>
-        data.uwagi.toLowerCase().includes(substring)
-      )
-    ) {
-      return "warning";
-    }
-    if (
-      blackLabel.some(substring => data.uwagi.toLowerCase().includes(substring))
-    ) {
-      return "dark";
-    }
+  yellowLabel.some(
+    str => data.uwagi && data.uwagi.toLowerCase().includes(str)
+  ) && (variant = "warning");
 
-    if (
-      redLabel.some(substring => data.uwagi.toLowerCase().includes(substring))
-    ) {
-      return "danger";
-    }
-  }
-  return "outline-primary";
+  blackLabel.some(
+    str => data.uwagi && data.uwagi.toLowerCase().includes(str)
+  ) && (variant = "dark");
+
+  redLabel.some(str => data.uwagi && data.uwagi.toLowerCase().includes(str)) &&
+    (variant = "danger");
+
+  if (data.uwagi) return variant;
+  else return "outline-primary";
 };
