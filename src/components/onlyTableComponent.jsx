@@ -9,8 +9,6 @@ import { faTrashAlt, faUserEdit } from "@fortawesome/free-solid-svg-icons";
 import EditTable from "./common/editTable";
 import color from "./common/colorDetails";
 
-//faCommentDots
-
 class OnlyTable extends Component {
   riseSort = sort => {
     const sortColumn = { ...this.props.sortColumn };

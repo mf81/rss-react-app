@@ -12,26 +12,24 @@ export default data => {
     "zmarl",
     "smierc"
   ];
-  let variant;
+  let variant = "outline-primary";
 
-  greeenLabel.some(
-    str => data.uwagi && data.uwagi.toLowerCase().includes(str)
-  ) && (variant = "success");
+  if (data.uwagi) {
+    greeenLabel.some(str => data.uwagi.toLowerCase().includes(str)) &&
+      (variant = "success");
 
-  blueLabel.some(str => data.uwagi && data.uwagi.toLowerCase().includes(str)) &&
-    (variant = "primary");
+    blueLabel.some(str => data.uwagi.toLowerCase().includes(str)) &&
+      (variant = "primary");
 
-  yellowLabel.some(
-    str => data.uwagi && data.uwagi.toLowerCase().includes(str)
-  ) && (variant = "warning");
+    yellowLabel.some(str => data.uwagi.toLowerCase().includes(str)) &&
+      (variant = "warning");
 
-  blackLabel.some(
-    str => data.uwagi && data.uwagi.toLowerCase().includes(str)
-  ) && (variant = "dark");
+    blackLabel.some(str => data.uwagi.toLowerCase().includes(str)) &&
+      (variant = "dark");
 
-  redLabel.some(str => data.uwagi && data.uwagi.toLowerCase().includes(str)) &&
-    (variant = "danger");
+    redLabel.some(str => data.uwagi.toLowerCase().includes(str)) &&
+      (variant = "danger");
 
-  if (data.uwagi) return variant;
-  else return "outline-primary";
+    return variant;
+  } else return "outline-primary";
 };
