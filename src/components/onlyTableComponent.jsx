@@ -23,36 +23,38 @@ class OnlyTable extends Component {
   };
 
   renderSortIcon = sortBy => {
-    if (sortBy === this.props.sortColumn.sortBy) {
-      if (this.props.sortColumn.order === "asc")
+    const sortColumn = { ...this.props.sortColumn };
+    if (sortBy === sortColumn.sortBy) {
+      if (sortColumn.order === "asc")
         return <i className="fa fa-sort-asc" style={{ color: "green" }}></i>;
       else
         return <i className="fa fa-sort-desc" style={{ color: "green" }}></i>;
     }
   };
 
+  labelColor = name => {
+    const sortColumn = { ...this.props.sortColumn };
+    return name === sortColumn.sortBy ? { color: "green" } : { color: "black" };
+  };
+
   render() {
-    const { data, onDelete, fields, onEdit, filter } = this.props;
+    const { data, onDelete, fields, onEdit } = this.props;
     return (
       <React.Fragment>
         <table className="table table-striped">
           <thead>
             <tr>
-              <th key="lp">LP.</th>
+              <th key="lp" style={{ cursor: "pointer" }}>
+                <p>LP.</p>
+              </th>
               <th />
               <th
                 onClick={() => this.riseSort("imieNazwisko")}
                 style={{ cursor: "pointer" }}
                 key="imieNazwisko"
               >
-                <p
-                  style={
-                    "imieNazwisko" === this.props.sortColumn.sortBy
-                      ? { color: "green" }
-                      : { color: "black" }
-                  }
-                >
-                  {fields.imieNazwisko.firstSite && fields.imieNazwisko.label}{" "}
+                <p style={this.labelColor("imieNazwisko")}>
+                  {fields.imieNazwisko.label}{" "}
                   {this.renderSortIcon("imieNazwisko")}
                 </p>
               </th>
@@ -61,15 +63,8 @@ class OnlyTable extends Component {
                 style={{ cursor: "pointer" }}
                 key="nr"
               >
-                <p
-                  style={
-                    "nr" === this.props.sortColumn.sortBy
-                      ? { color: "green" }
-                      : { color: "black" }
-                  }
-                >
-                  {fields.nr.firstSite && fields.nr.label}{" "}
-                  {this.renderSortIcon("nr")}
+                <p style={this.labelColor("nr")}>
+                  {fields.nr.label} {this.renderSortIcon("nr")}
                 </p>
               </th>
               <th
@@ -77,15 +72,8 @@ class OnlyTable extends Component {
                 style={{ cursor: "pointer" }}
                 key="rok"
               >
-                <p
-                  style={
-                    "rok" === this.props.sortColumn.sortBy
-                      ? { color: "green" }
-                      : { color: "black" }
-                  }
-                >
-                  {fields.rok.firstSite && fields.rok.label}{" "}
-                  {this.renderSortIcon("rok")}
+                <p style={this.labelColor("rok")}>
+                  {fields.rok.label} {this.renderSortIcon("rok")}
                 </p>
               </th>
               <th
@@ -93,15 +81,8 @@ class OnlyTable extends Component {
                 style={{ cursor: "pointer" }}
                 key="rokDW"
               >
-                <p
-                  style={
-                    "rokDW" === this.props.sortColumn.sortBy
-                      ? { color: "green" }
-                      : { color: "black" }
-                  }
-                >
-                  {fields.rokDW.firstSite && fields.rokDW.label}{" "}
-                  {this.renderSortIcon("rokDW")}
+                <p style={this.labelColor("rokDW")}>
+                  {fields.rokDW.label} {this.renderSortIcon("rokDW")}
                 </p>
               </th>
               <th
@@ -109,100 +90,53 @@ class OnlyTable extends Component {
                 style={{ cursor: "pointer" }}
                 key="nrDW"
               >
-                <p
-                  style={
-                    "nrDW" === this.props.sortColumn.sortBy
-                      ? { color: "green" }
-                      : { color: "black" }
-                  }
-                >
-                  {fields.nrDW.firstSite && fields.nrDW.label}{" "}
-                  {this.renderSortIcon("nrDW")}
+                <p style={this.labelColor("nrDW")}>
+                  {fields.nrDW.label} {this.renderSortIcon("nrDW")}
                 </p>
               </th>
-
               <th
                 onClick={() => this.riseSort("kodLokalu")}
                 style={{ cursor: "pointer" }}
                 key="kodLokalu"
               >
-                <p
-                  style={
-                    "kodLokalu" === this.props.sortColumn.sortBy
-                      ? { color: "green" }
-                      : { color: "black" }
-                  }
-                >
-                  {fields.kodLokalu.firstSite && fields.kodLokalu.label}{" "}
-                  {this.renderSortIcon("kodLokalu")}
+                <p style={this.labelColor("kodLokalu")}>
+                  {fields.kodLokalu.label} {this.renderSortIcon("kodLokalu")}
                 </p>
               </th>
-
               <th
                 onClick={() => this.riseSort("polaczono")}
                 style={{ cursor: "pointer" }}
                 key="polaczono"
               >
-                <p
-                  style={
-                    "polaczono" === this.props.sortColumn.sortBy
-                      ? { color: "green" }
-                      : { color: "black" }
-                  }
-                >
-                  {fields.polaczono.firstSite && fields.polaczono.label}{" "}
-                  {this.renderSortIcon("polaczono")}
+                <p style={this.labelColor("polaczono")}>
+                  {fields.polaczono.label} {this.renderSortIcon("polaczono")}
                 </p>
               </th>
-
               <th
                 onClick={() => this.riseSort("adres")}
                 style={{ cursor: "pointer" }}
                 key="adres"
               >
-                <p
-                  style={
-                    "adres" === this.props.sortColumn.sortBy
-                      ? { color: "green" }
-                      : { color: "black" }
-                  }
-                >
-                  {fields.adres.firstSite && fields.adres.label}{" "}
-                  {this.renderSortIcon("adres")}
+                <p style={this.labelColor("adres")}>
+                  {fields.adres.label} {this.renderSortIcon("adres")}
                 </p>
               </th>
-
               <th
                 onClick={() => this.riseSort("wartosc")}
                 style={{ cursor: "pointer" }}
                 key="wartosc"
               >
-                <p
-                  style={
-                    "wartosc" === this.props.sortColumn.sortBy
-                      ? { color: "green" }
-                      : { color: "black" }
-                  }
-                >
-                  {fields.wartosc.firstSite && fields.wartosc.label}{" "}
-                  {this.renderSortIcon("wartosc")}
+                <p style={this.labelColor("wartosc")}>
+                  {fields.wartosc.label} {this.renderSortIcon("wartosc")}
                 </p>
               </th>
-
               <th
                 onClick={() => this.riseSort("sygnaturaNakaz")}
                 style={{ cursor: "pointer" }}
                 key="sygnaturaNakaz"
               >
-                <p
-                  style={
-                    "sygnaturaNakaz" === this.props.sortColumn.sortBy
-                      ? { color: "green" }
-                      : { color: "black" }
-                  }
-                >
-                  {fields.sygnaturaNakaz.firstSite &&
-                    fields.sygnaturaNakaz.label}{" "}
+                <p style={this.labelColor("sygnaturaNakaz")}>
+                  {fields.sygnaturaNakaz.label}{" "}
                   {this.renderSortIcon("sygnaturaNakaz")}
                 </p>
               </th>
@@ -210,10 +144,8 @@ class OnlyTable extends Component {
             </tr>
           </thead>
           <tbody key="tableComponentBody">
-            {!data.some(item => {
-              return item.notFound;
-            }) &&
-              data.map((data, i) => (
+            {data.map((data, i) =>
+              data.imieNazwisko !== "non" ? (
                 <tr key={data._id + "-tr"}>
                   <td key={data._id + "-id"}>{i + 1}</td>
                   <td>
@@ -288,13 +220,19 @@ class OnlyTable extends Component {
                     />
                   </td>
                 </tr>
-              ))}
+              ) : (
+                <tr>
+                  <td colspan="13">
+                    <div className="alert alert-danger m-2">
+                      Spokojnie, nie denerwuj się, oddychaj miarowo - nie ma
+                      wpisu w bazie ale świat się na tym nie kończy.
+                    </div>
+                  </td>
+                </tr>
+              )
+            )}
           </tbody>
         </table>
-        {filter && data[0].notFound && (
-          <div className="alert alert-danger m-2">{data[0].notFound}</div>
-        )}
-
         {!data.length && (
           <div className="alert alert-success m-2">
             <Spinner animation="border" size="sm" />

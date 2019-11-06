@@ -27,149 +27,126 @@ class RssTable extends Component {
     fields: {
       imieNazwisko: {
         label: "Imie, Nazwisko",
-        firstSite: true,
         search: false,
         searchValue: ""
       },
-      nr: { label: "Nr", firstSite: true, search: false, searchValue: "" },
-      rok: { label: "Rok", firstSite: true, search: false, searchValue: "" },
+      nr: { label: "Nr", search: false, searchValue: "" },
+      rok: { label: "Rok", search: false, searchValue: "" },
       rokDW: {
         label: "Rok DW",
-        firstSite: true,
+
         search: false,
         searchValue: ""
       },
-      nrDW: { label: "Nr DW", firstSite: true, search: false, searchValue: "" },
+      nrDW: { label: "Nr DW", search: false, searchValue: "" },
       kodLokalu: {
         label: "Kod lokalu",
-        firstSite: true,
         search: false,
         searchValue: ""
       },
       polaczono: {
         label: "Połączono",
-        firstSite: true,
         search: false,
         searchValue: ""
       },
       adres: {
         label: "Adres",
-        firstSite: true,
         search: false,
         searchValue: ""
       },
       wartosc: {
         label: "Wartość",
-        firstSite: true,
         search: false,
         searchValue: ""
       },
       sygnaturaNakaz: {
         label: "Sygnatura Nakaz",
-        firstSite: true,
         search: false,
         searchValue: ""
       },
       rodzaj: {
         label: "Rodzaj ",
-        firstSite: false,
         search: false,
         searchValue: ""
       },
-      ADM: { label: "ADM", firstSite: false, search: false, searchValue: "" },
+      ADM: { label: "ADM", search: false, searchValue: "" },
       okresDochodzony: {
         label: "Okres Dochodzony",
-        firstSite: false,
         search: false,
         searchValue: ""
       },
       wniesieniePozwu: {
         label: "Wniesienie Pozwu",
-        firstSite: false,
         search: false,
         searchValue: ""
       },
       orzeczenieNakaz: {
         label: "Orzeczenie Nakaz",
-        firstSite: false,
         search: false,
         searchValue: ""
       },
       sygnaturaSprzeciw: {
         label: "SygnaturaSprzeciw",
-        firstSite: false,
         search: false,
         searchValue: ""
       },
       orzeczenieSprzeciw: {
         label: "Orzeczenie Sprzeciw",
-        firstSite: false,
         search: false,
         searchValue: ""
       },
       sygnaturaApelacja: {
         label: "Sygnatura Apelacja",
-        firstSite: false,
         search: false,
         searchValue: ""
       },
       orzeczenieApelacja: {
         label: "Orzeczenie Apelacja",
-        firstSite: false,
         search: false,
         searchValue: ""
       },
       wystapienieOklauzule: {
         label: "Wystapienie Oklauzule",
-        firstSite: false,
         search: false,
         searchValue: ""
       },
       wniosekMajatku: {
         label: "Wniosek Majatku:",
-        firstSite: false,
         search: false,
         searchValue: ""
       },
       sygnAktWyjawienia: {
         label: "Sygnatura Akt Wyjawienia",
-        firstSite: false,
         search: false,
         searchValue: ""
       },
       orzeczenieWyjawienia: {
         label: "Orzeczenie Wyjawienia",
-        firstSite: false,
         search: false,
         searchValue: ""
       },
       etapPostEgz: {
         label: "Etap Postępowania Egzekującego",
-        firstSite: false,
         search: false,
         searchValue: ""
       },
       uwagi: {
         label: "Uwagi",
-        firstSite: false,
         search: false,
         searchValue: ""
       },
       przekazanoDoDP: {
         label: "Przekazano do DP",
-        firstSite: false,
         search: false,
         searchValue: ""
       },
       rozliczoneZastepstwa: {
         label: "Rozliczone Zastępstwa",
-        firstSite: false,
         search: false,
         searchValue: ""
       },
       radcaPrawny: {
         label: "Radca Prawny",
-        firstSite: false,
         search: false,
         searchValue: ""
       }
@@ -254,10 +231,15 @@ class RssTable extends Component {
   };
 
   handleAllSearch = () => {
+    const { fields, filterAll } = this.state;
     this.setState({
       onFocusSearch: true,
       filter: "",
-      filterAll: !this.state.filterAll
+      fields: {
+        ...fields,
+        rok: { ...fields.rok, search: true, searchValue: "" }
+      },
+      filterAll: !filterAll
     });
   };
 
@@ -276,16 +258,8 @@ class RssTable extends Component {
     });
     if (Array.isArray(res) && res.length) {
       return res;
-    } else {
-      filter.length &&
-        (data = [
-          {
-            notFound:
-              "Brak wyniku wyszukiwania - nie denerwuj się, spokojnie, spróbuj wpisać inną frazę i powodzenia :)"
-          }
-        ]);
-      return data;
     }
+    return (data = [{ imieNazwisko: "non" }]);
   };
 
   filterSearchMany = (data, filterAll) => {
@@ -343,10 +317,6 @@ class RssTable extends Component {
       return (fields[i].search = false);
     });
     this.setState(fields);
-  };
-
-  handleAuthor = () => {
-    console.log("OK");
   };
 
   render() {

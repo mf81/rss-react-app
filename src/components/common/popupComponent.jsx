@@ -21,10 +21,10 @@ const Popup = ({
   const handleShow = () => setShow(true);
 
   const key = uuidv1();
-  let comm;
+  let splitComment;
   if (comment && comment.indexOf(":") !== -1) {
-    comm = comment.toString().split(":")[1];
-  } else comm = comment;
+    splitComment = comment.toString().split(":")[1];
+  } else splitComment = comment;
 
   return (
     <React.Fragment>
@@ -34,7 +34,7 @@ const Popup = ({
           variant={variant}
           handleShow={handleShow}
           label={label}
-          comment={comm}
+          comment={splitComment}
           extraComment={extraComment}
           placement={placement}
         />
