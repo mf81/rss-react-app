@@ -12,7 +12,6 @@ import color from "./common/colorDetails";
 class OnlyTable extends Component {
   riseSort = sort => {
     const sortColumn = { ...this.props.sortColumn };
-
     if (sortColumn.sortBy === sort) {
       sortColumn.order = sortColumn.order === "asc" ? "desc" : "asc";
     } else {
@@ -54,7 +53,7 @@ class OnlyTable extends Component {
                 key="imieNazwisko"
               >
                 <p style={this.labelColor("imieNazwisko")}>
-                  {fields.imieNazwisko.label}{" "}
+                  {fields.imieNazwisko.label}
                   {this.renderSortIcon("imieNazwisko")}
                 </p>
               </th>
