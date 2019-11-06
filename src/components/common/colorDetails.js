@@ -12,9 +12,10 @@ export default data => {
     "zmarl",
     "smierc"
   ];
-  let variant = "outline-success";
 
   if (data.uwagi) {
+    let variant = "outline-success";
+
     greeenLabel.some(str => data.uwagi.toLowerCase().includes(str)) &&
       (variant = "success");
 
