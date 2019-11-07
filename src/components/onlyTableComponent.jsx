@@ -221,7 +221,7 @@ class OnlyTable extends Component {
                 </tr>
               ) : (
                 <tr>
-                  <td colspan="13">
+                  <td colSpan="13" key="nonTd">
                     <div className="alert alert-danger m-2">
                       Spokojnie, nie denerwuj się, oddychaj miarowo - nie ma
                       wpisu w bazie ale świat się na tym nie kończy.

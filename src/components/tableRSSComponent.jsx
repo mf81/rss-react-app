@@ -175,15 +175,17 @@ class RssTable extends Component {
 
   handleAdd = async data => {
     const originalState = this.state.data;
-
-    const newState = [data, ...this.state.data];
-    this.setState({ data: newState });
-
+    // const newState = [data, ...this.state.data];
+    // this.setState({ data: newState });
+    let res;
     try {
-      await axios.post(this.BACKEND_INTERFACE, data);
+      res = await axios.post(this.BACKEND_INTERFACE, data);
     } catch {
       this.setState({ data: originalState });
     }
+    const { _id } = res.data;
+    const record = { _id: _id, ...data };
+    this.setState({ data: [record, ...this.state.data] });
   };
 
   handleEdit = async (newData, oldData) => {
@@ -195,7 +197,7 @@ class RssTable extends Component {
     this.setState({ data });
 
     try {
-      await axios.put(this.BACKEND_INTERFACE + newData._id, newData);
+      await axios.put(this.BACKEND_INTERFACE + oldData._id, newData);
     } catch {
       this.setState({ data: originalState });
     }
