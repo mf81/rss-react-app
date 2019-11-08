@@ -1,4 +1,5 @@
 import React from "react";
+import uuidv1 from "uuid/v1";
 import {
   Tooltip,
   OverlayTrigger,
@@ -6,8 +7,8 @@ import {
   ButtonToolbar
 } from "react-bootstrap";
 
+const key = uuidv1();
 const buttonToolTip = ({
-  key,
   label,
   comment,
   extraComment,

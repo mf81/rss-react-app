@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import ButtonToolTip from "./buttonToolTip";
 
-const uuidv1 = require("uuid/v1");
 const Popup = ({
   label,
   title,
@@ -20,7 +19,6 @@ const Popup = ({
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const key = uuidv1();
   let splitComment;
   if (comment && comment.indexOf(":") !== -1) {
     splitComment = comment.toString().split(":")[1];
@@ -30,7 +28,6 @@ const Popup = ({
     <React.Fragment>
       {comment ? (
         <ButtonToolTip
-          key={key}
           variant={variant}
           handleShow={handleShow}
           label={label}

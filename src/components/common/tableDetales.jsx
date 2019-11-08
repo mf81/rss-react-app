@@ -1,7 +1,7 @@
 import React from "react";
 import Items from "./items";
 
-const TablePopup = ({ fields, data, color }) => {
+const TablePopup = ({ fields, data }) => {
   return (
     <table className="table table-striped">
       <thead>
@@ -12,7 +12,7 @@ const TablePopup = ({ fields, data, color }) => {
       </thead>
       <tbody>
         {Object.keys(fields).map(
-          (item, i) =>
+          item =>
             data[item] &&
             item !== "imieNazwisko" && (
               <tr key={"tr" + item}>

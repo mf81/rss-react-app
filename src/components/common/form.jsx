@@ -38,7 +38,6 @@ class Form extends Component {
   };
 
   handleChange = ({ currentTarget }) => {
-    console.log(currentTarget);
     const { name, value } = currentTarget;
     const errors = { ...this.state.errors };
 
